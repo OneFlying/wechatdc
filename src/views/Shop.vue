@@ -3,12 +3,23 @@
 * 美食、超市
 */
 <template>
-  <div style="height:100%">
+  <div>
     <scroller v-ref:scroller lock-x scrollbar-y height="-45+'px'">
       <div style="padding-bottom: 20px">
         <x-header :left-options="{backText:'返回',showBack:true}" :title="title">
-          <span slot="right" class="iconfont icon-search" style="color: #fff;font-size: 20px"></span>
+          <span slot="right" class="iconfont icon-search" @click="showsearch"
+                style="color: #fff;font-size: 18px;padding:15px 15px;margin-right:-15px;"></span>
         </x-header>
+        <div v-if="show" transition="expand">
+          <group style="margin-top: -1.17647059em">
+            <x-input placeholder="输入商户、商品"></x-input>
+            <x-input placeholder="输入取餐点、取货点" readonly @click="showlocations()"></x-input>
+            <datetime title="营业时间" :placeholder="placeholder | date-formatter 'YYYY-MM-DD HH:mm'" format="YYYY-MM-DD HH:mm"
+                      year-row="{value}年" month-row="{value}月" day-row="{value}日"
+                      hour-row="{value}时" minute-row="{value}分" confirm-text="完成"
+                      cancel-text="取消"></datetime>
+          </group>
+        </div>
         <swiper
           :list="baseList" :show-desc-mask="false"
           auto :aspect-ratio="300/800" dots-position="center"></swiper>
@@ -62,11 +73,32 @@
               <span class="day">%_S2</span>秒
             </clocker>
           </cell>
+          <scroller lock-y scrollbar-x>
+            <div class="box1">
+              <div class="box1-item" v-for="i in 7"><span>{{' ' + i + ' '}}</span></div>
+            </div>
+          </scroller>
         </group>
         <group style="margin-top: -15px">
-          <cell title="推荐商家" class="wxdc-list-title">
-            <span slot="icon" class="iconfont icon-shoplight" style="font-size: 16px"></span>
-          </cell>
+          <div class="wxdc-cond">
+            <flexbox wrap="wrap">
+              <flexbox-item class="wxdc-cond-item" @click="showmenus(1)">
+                分类<span class="iconfont icon-triangledownfill" style="font-size: 10px"></span>
+              </flexbox-item>
+              <flexbox-item class="wxdc-cond-item" @click="showmenus(2)">
+                排序<span class="iconfont icon-triangledownfill" style="font-size: 10px"></span>
+              </flexbox-item>
+              <flexbox-item class="wxdc-cond-item" @click="showmenus(3)">
+                筛选<span class="iconfont icon-triangledownfill" style="font-size: 10px"></span>
+              </flexbox-item>
+            </flexbox>
+          </div>
+          <!-- 下拉菜单 -->
+          <div v-if="showmenu" class="wxdc-cond-menu" transition="expandmenu">
+            <cell v-for="i in 6" is-link>
+              <span slot="icon">菜单{{ i }}</span>
+            </cell>
+          </div>
           <!--content slot-->
           <div class="box2">
             <a class="weui_media_box weui_media_appmsg" style="padding-right: 5px" v-for="i in n">
@@ -101,6 +133,15 @@
         </group>
       </div>
     </scroller>
+    <popup :show.sync="showpopup" height="280px" title="选择取餐点、取货点">
+      <group style="margin-top: -20px">
+        <cell title="选择取餐点、取货点">
+        <span class="iconfont icon-close_light" @click="showlocations"
+              style="font-size: 16px;color:#eee;background:#999;border-radius: 100%;padding:1px;"></span>
+        </cell>
+      </group>
+      <picker :data='years' :value.sync="locations"></picker>
+    </popup>
   </div>
 </template>
 <script>
@@ -115,12 +156,25 @@
     Clocker,
     Flexbox,
     FlexboxItem,
-    Rater
+    Rater,
+    XInput,
+    Datetime,
+    DateFormatter,
+    Popup,
+    Picker
   } from 'vux/src/components'
   import {
     getAD,
     getList
   } from '../vuex/getters'
+
+  let years = []
+  for (var i = 2000; i <= 2030; i++) {
+    years.push({
+      name: i + '年',
+      value: i + ''
+    })
+  }
 
   export default {
     components: {
@@ -134,12 +188,49 @@
       Clocker,
       Flexbox,
       FlexboxItem,
-      Rater
+      Rater,
+      XInput,
+      Datetime,
+      Popup,
+      Picker
+    },
+    filters: {
+      DateFormatter
     },
     vuex: {
       getters: {
         getAD,
         getList
+      }
+    },
+    methods: {
+      showsearch () {
+        this.show ? this.show = false : this.show = true
+        let self = this
+        setTimeout(function () {
+          self.$nextTick(() => {
+            self.$refs.scroller.reset()
+          })
+        }, 320)
+      },
+      showlocations () {
+        this.showpopup ? this.showpopup = false : this.showpopup = true
+      },
+      showmenus (type) {
+        if (this.currentType !== type) {
+          if (!this.showmenu) {
+            this.showmenu = true
+          }
+          this.currentType = type
+        } else {
+          this.showmenu ? this.showmenu = false : this.showmenu = true
+        }
+        let self = this
+        setTimeout(function () {
+          self.$nextTick(() => {
+            self.$refs.scroller.reset()
+          })
+        }, 320)
       }
     },
     data () {
@@ -148,10 +239,19 @@
         baseList: this.getList,
         ads: this.getAD,
         time: '2017-02-03', // 倒计时
-        n: 20
+        n: 20,
+        show: false,
+        showpopup: false,
+        showmenu: false,
+        placeholder: new Date(),
+        location: [],
+        locations: [],
+        currentType: 0, // 记录菜单
+        years: [years]
       }
     },
     ready () {
+      // 刷新列表之后必须调用
       this.$nextTick(() => {
         this.$refs.scroller.reset()
       })
@@ -160,7 +260,29 @@
 </script>
 <style>
   @import "../assets/font/iconfont.css";
-
+  /* 必需 */
+  .expand-transition {
+    transition: all .3s ease;
+    height: 135px;
+    background-color: #eee;
+    overflow: hidden;
+  }
+  /* .expand-enter 定义进入的开始状态 */
+  /* .expand-leave 定义离开的结束状态 */
+  .expand-enter, .expand-leave {
+    height: 0;
+    opacity: 0;
+  }
+  .expandmenu-transition {
+    transition: all .3s ease;
+    height: 270px;
+    background-color: #eee;
+    overflow: hidden;
+  }
+  .expandmenu-enter, .expandmenu-leave {
+    height: 0;
+    opacity: 0;
+  }
   .day {
     background-color:#000;
     color:#fff;
@@ -216,5 +338,43 @@
   }
   .wxdc_weui_media_title_noborder:before {
     display: none;
+  }
+  /* 条件搜索 */
+  .wxdc-cond {
+    position: relative;
+  }
+  .wxdc-cond:before {
+    content: " ";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 1px;
+    border-top: 1px solid #D9D9D9;
+    color: #D9D9D9;
+    transform-origin: 0 0;
+    transform: scaleY(0.5);
+  }
+  .wxdc-cond-item {
+    text-align: center;
+    color: #555;
+    font-size: 14px;
+    padding: 12px 0;
+    position: relative;
+  }
+  .wxdc-cond-item:after {
+    content: " ";
+    position: absolute;
+    top: 10px;
+    bottom: 10px;
+    right: 0;
+    width: 1px;
+    border-left: 1px solid #D9D9D9;
+    color: #D9D9D9;
+    transform-origin: 0 0;
+    transform: scaleX(0.5);
+  }
+  .wxdc-cond-item > span {
+    margin-left: 3px;
   }
 </style>

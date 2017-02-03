@@ -87,7 +87,10 @@
           </cell>
           <!--content slot-->
           <div class="box2">
-            <a class="weui_media_box weui_media_appmsg" style="padding-right: 5px" v-for="i in n">
+            <a class="weui_media_box weui_media_appmsg"
+               style="padding-right: 5px"
+               v-for="i in n"
+               v-link="{name:'store',params:{id:1,name:'黄猛击米饭'}}">
               <div class="weui_media_hd">
                 <img class="weui_media_appmsg_thumb" alt="" src="http://placeholder.qiniudn.com/60x60/3cc51f/ffffff">
               </div>
@@ -245,66 +248,6 @@
   .wxdc-base .vux-slider .vux-indicator-right > a > .vux-icon-dot.active {
     background-color: #26a2ff;
   }
-  /* flexbox */
-  .wxdc-flexbox-item a {
-    display: block;
-    width: 100%;
-    padding: 10px 0;
-  }
-  .wxdc-flexbox-item a > img {
-    width: 52px;
-    display: block;
-    margin: auto;
-  }
-  .wxdc-flexbox-item a > span {
-    text-align: center;
-    display: block;
-    width: 100%;
-    font-size: 14px;
-    color: #666;
-  }
-  .wxdc-ad-flexbox img {
-    display: block;
-    width: 50px;
-  }
-  .wxdc-ad-flexbox a {
-    display: block;
-    position: relative;
-  }
-  .wxdc-ad-flexbox a:before {
-    content: " ";
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    height: 1px;
-    border-top: 1px solid #D9D9D9;
-    color: #D9D9D9;
-    transform-origin: 0 0;
-    transform: scaleY(0.5);
-  }
-  .wxdc-ad-flexbox a:after {
-    content: " ";
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 1px;
-    height: 100%;
-    border-left: 1px solid #D9D9D9;
-    color: #D9D9D9;
-    transform-origin: 0 0;
-    transform: scaleX(0.5);
-  }
-  .wxdc-ad-flexbox a.wxdc-ad-flexbox-noborder:before {
-    display: none;
-  }
-  .wxdc-ad-flexbox a.wxdc-ad-flexbox-notborder:after {
-    display: none;
-  }
-  .wxdc-ad-flexbox span {
-    color: #888;
-    font-size: 14px;
-  }
   .day {
     background-color:#000;
     color:#fff;
@@ -313,26 +256,6 @@
     padding:0 3px;
     border-radius:3px;
     margin: 0 0 0 -2px;
-  }
-  /* 横向滚动 */
-  .box1 {
-    height: 100px;
-    position: relative;
-    width: 1490px;
-    padding-bottom: 10px;
-  }
-  .box1-item {
-    width: 200px;
-    height: 100px;
-    background-color: #ccc;
-    display:inline-block;
-    margin-left: 15px;
-    float: left;
-    text-align: center;
-    line-height: 100px;
-  }
-  .box1-item:first-child {
-    margin-left: 0;
   }
   /* 推荐商家 */
   .wxdc-list-title {
@@ -360,23 +283,6 @@
   }
   .wxdc_weui_media_title .weui_cell_ft {
     white-space: nowrap;
-  }
-  .wxdc_weui_media_qsf {
-    background-color: #26a2ff;
-    color: #fff;
-    border-radius: 3px;
-    display: inline-block;
-    padding: 1px 2px;
-    border: 1px solid transparent;
-    font-size: 10px;
-  }
-  .wxdc_weui_media_psf {
-    color: #26a2ff;
-    border: 1px solid #26a2ff;
-    padding: 0 2px 1px;
-    border-radius: 3px;
-    white-space: nowrap;
-    font-size: 10px;
   }
   .wxdc_weui_media_title_noborder:before {
     display: none;

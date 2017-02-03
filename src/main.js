@@ -59,6 +59,7 @@ sync(store, router)
 import Shop from './views/Shop'
 import Order from './views/Order'
 import Me from './views/Me'
+import Store from './views/Store'
 
 router.map({
   '/': {
@@ -75,6 +76,10 @@ router.map({
   },
   '/me': {
     component: Me
+  },
+  'store/:id/:name': {
+    name: 'store',
+    component: Store
   }
 })
 
