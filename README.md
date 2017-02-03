@@ -5,7 +5,7 @@
 
 ``` bash
 # install dependencies
-npm install
+npm install (cnpm)
 
 # serve with hot reload at localhost:8083
 npm run dev
