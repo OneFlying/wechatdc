@@ -31,7 +31,7 @@ For detailed explanation on how things work, checkout the [guide](http://vuejs-t
 + [hotlove](https://github.com/hotlove)
 + [gaoqijun](https://github.com/gaoqijun)
 
-## Vux is Inspired or Powered By:
+## wechatdc is Inspired or Powered By:
 + [Vue](https://github.com/vuejs/vue)
 + [Vux](https://github.com/airyland/vux)
 
