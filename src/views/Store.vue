@@ -39,59 +39,48 @@
           <!--<span class="iconfont icon-back_light"></span><span>返回</span>-->
           <!--</a>-->
         </div>
-        <div class="menu vux-1px-r">
+        <div class="menu">
           <scroller lock-x scrollerbar-y height="-190+'px'">
             <div class="wxdc-menu-box">
               <ul>
-                <li class="vux-1px-b"><span>热搜推荐</span></li>
-                <li class="vux-1px-b"><span>手机数码</span></li>
-                <li class="vux-1px-b"><span>家用电器</span></li>
-                <li class="vux-1px-b"><span>女装内衣</span></li>
-                <li class="vux-1px-b"><span>男装内衣</span></li>
-                <li class="vux-1px-b"><span>鞋靴箱包</span></li>
-                <li class="vux-1px-b"><span>电脑办公</span></li>
-                <li class="vux-1px-b"><span>运动户外</span></li>
-                <li class="vux-1px-b"><span>个护化妆</span></li>
-                <li class="vux-1px-b"><span>家具建材</span></li>
-                <li class="vux-1px-b"><span>家居家纺</span></li>
-                <li class="vux-1px-b"><span>母婴玩具</span></li>
-                <li class="vux-1px-b"><span>食品生鲜</span></li>
-                <li class="vux-1px-b"><span>酒水饮料</span></li>
-                <li class="vux-1px-b"><span>钟表奢品</span></li>
-                <li class="vux-1px-b"><span>汽车用品</span></li>
-                <li class="vux-1px-b"><span>医药保健</span></li>
-                <li class="vux-1px-b"><span>珠宝饰品</span></li>
-                <li class="vux-1px-b"><span>图书音像</span></li>
-                <li class="vux-1px-b"><span>全球购</span></li>
+                <li class="vux-1px-b" v-for="sort in sorts" :class="active === sort ? 'active' : ''"><span>{{ sort }}</span></li>
               </ul>
             </div>
           </scroller>
         </div>
         <div class="content">
-          <scroller lock-x scrollbar-y height="-180+'px'">
-            <div>
-              <a class="weui_media_box weui_media_appmsg"
-                 style="padding-right: 5px"
-                 v-for="good in list">
-                <div class="weui_media_hd" style="width: 45px;">
-                  <img class="weui_media_appmsg_thumb" alt="" :src="good.img">
-                </div>
-                <div class="weui_media_bd">
-                  <h4 class="weui_media_title">{{ good.title }}</h4>
-                  <p class="weui_media_desc">
-                    <cell class="wxdc_weui_media_title">
-                      <rater :value="4.3" slot="icon" :font-size="12" :margin="0" active-color="#ffaa0c"></rater>
-                      <span slot="icon" style="color: #ff6000">4.3</span>
-                    </cell>
-                    <cell class="wxdc_weui_media_title wxdc_weui_media_title_noborder">
-                      <span slot="icon">&#165;35</span>
-                      <span slot="value">
-
-                      </span>
-                    </cell>
-                  </p>
-                </div>
-              </a>
+          <scroller lock-x scrollbar-y height="-150+'px'">
+            <div class="wxdc_weui_media" style="padding-bottom: 60px">
+              <group v-for="sort in sorts" :title="sort" style="margin-top: -5px;">
+                <a class="weui_media_box weui_media_appmsg"
+                   style="padding-right: 5px; padding-left: 10px"
+                   v-for="good in list" @click="detail">
+                  <div class="weui_media_hd" style="width: 45px;">
+                    <img class="weui_media_appmsg_thumb" alt="" src="http://placeholder.qiniudn.com/60x60/3cc51f/ffffff">
+                  </div>
+                  <div class="weui_media_bd">
+                    <h4 class="weui_media_title">{{ good.title }}</h4>
+                    <p class="weui_media_desc">
+                      <cell class="wxdc_weui_media_title">
+                        <rater :value="4.3" slot="icon" :font-size="12" :margin="0" active-color="#ffaa0c"></rater>
+                        <span slot="icon">4.3</span>
+                      </cell>
+                      <cell class="wxdc_weui_media_title wxdc_weui_media_title_noborder" style="padding-right: 10px">
+                        <span slot="icon" style="color: #ff6000; font-size: 14px;">&#165;35</span>
+                        <span slot="value" class="wxdc-number">
+                          <span class="wxdc-number-move" @click.stop.prevent="remove">
+                            <i class="iconfont icon-move"></i>
+                          </span>
+                          <span class="wxdc-number-number">0</span>
+                          <span class="wxdc-number-add" @click.stop.prevent="add">
+                            <i class="iconfont icon-add"></i>
+                          </span>
+                        </span>
+                      </cell>
+                    </p>
+                  </div>
+                </a>
+              </group>
             </div>
           </scroller>
         </div>
@@ -123,7 +112,9 @@
     XHeader,
     Tabbar,
     Tab,
-    TabItem
+    TabItem,
+    XNumber,
+    Group
   } from 'vux/src/components'
 
   export default {
@@ -134,39 +125,65 @@
       XHeader,
       Tabbar,
       Tab,
-      TabItem
+      TabItem,
+      XNumber,
+      Group
     },
     methods: {
       back () {
         window.history.go(-1)
+      },
+      remove () {
+        // 移除购物车
+        window.alert(-1)
+      },
+      add () {
+        // 添加购物车
+        window.alert(1)
+      },
+      detail () {
+        // 显示商品详情
+        window.alert(2)
       }
     },
     data () {
       return {
         state: 0,
         count: 35,
+        carts: [], // 购物车
         list2: ['商品', '商家'],
         demo2: '商品',
+        active: '分类一',
+        sorts: ['分类一', '分诶二', '分类三唯一退任', '分类似', '分类吴'], // 绑定list的number
         list: [{
           title: '洗颜新潮流！人气洁面皂排行榜',
-          img: 'https://cdn.xiaotaojiang.com/uploads/82/1572ec37969ee263735262dc017975/_.jpg'
+          show: false,
+          number: 0
         }, {
           title: '美容用品 & 日用品（上）',
-          img: 'https://cdn.xiaotaojiang.com/uploads/59/b22e0e62363a4a652f28630b3233b9/_.jpg'
+          show: false,
+          number: 0
         }, {
           title: '日本车载空气净化器精选',
-          img: 'https://cdn.xiaotaojiang.com/uploads/56/4b3601364b86fdfd234ef11d8712ad/_.jpg'
+          show: false,
+          number: 0
         }, {
           title: '洗颜新潮流！人气洁面皂排行榜',
-          img: 'https://cdn.xiaotaojiang.com/uploads/82/1572ec37969ee263735262dc017975/_.jpg'
+          show: false,
+          number: 0
         }, {
           title: '美容用品 & 日用品（上）',
-          img: 'https://cdn.xiaotaojiang.com/uploads/59/b22e0e62363a4a652f28630b3233b9/_.jpg'
+          show: false,
+          number: 0
         }, {
           title: '日本车载空气净化器精选',
-          img: 'https://cdn.xiaotaojiang.com/uploads/56/4b3601364b86fdfd234ef11d8712ad/_.jpg'
+          show: false,
+          number: 0
         }]
       }
+    },
+    created () {
+      // @params name id 通过 this.$route.params 获取
     }
   }
 </script>
@@ -177,22 +194,26 @@
   .menu {
     width: 75px;
     float: left;
-    background-color: #fff;
+    background-color: #f8f8f8;
   }
   .wxdc-menu-box {
     padding-bottom: 20px;
   }
   .wxdc-menu-box ul {
-    width: 74px;
+    width: 75px;
   }
   .wxdc-menu-box li{
-    text-align: center;
-    padding: 0 5px;
+    text-align: left;
+    padding: 15px 5px;
     font-size: 14px;
-    line-height: 40px;
+    line-height: 20px;
+    color: #666;
+  }
+  .wxdc-menu-box li.active {
+    background: #fff;
   }
   .content {
-    padding-left: 20px;
+    padding-left: -10px;
   }
   .wxdc-header {
     background-position: top center;
@@ -225,15 +246,16 @@
     background-color: rgba(61,61,63,0.9);
     height: 48px;
     width: 100%;
-    backdrop: blur(30px);
+    backdrop-filter: blur(5px);
   }
   .wxdc-store-cart {
     position: absolute;
+    z-index: 102;
     width: 50px;
     height: 50px;
     background: #363636;
     bottom: 0;
-    border: 5px solid #444;
+    border: 5px solid #404040;
     border-radius: 100%;
     left: 10px;
     color: #67676b;
@@ -270,5 +292,45 @@
     text-decoration: none;
     outline: none;
     appearance: none;
+  }
+  .wxdc_weui_media .weui_media_box {
+    padding: 10px 0;
+  }
+  .wxdc_weui_media .wxdc_weui_media_title {
+    padding: 2px 0;
+  }
+  /* 添加或删除购物车 */
+  .wxdc-number {
+    padding: 0 0;
+  }
+  .wxdc-number > span {
+    display: inline-block;
+    font-size: 16px;
+    width: 23px;
+    height: 23px;
+    line-height: 23px;
+    border-radius: 100%;
+    text-align: center;
+  }
+  .wxdc-number > span.wxdc-number-move {
+    border: 2px solid #26a2ff;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    color: #26a2ff;
+  }
+  .wxdc-number-add {
+    background: #26a2ff;
+    color: #fff;
+  }
+  .wxdc-number > span.wxdc-number-number {
+    width: 30px;
+    height: 20px;
+    text-align: center;
+    border-radius: 0;
+    line-height: 24px;
+  }
+  .wxdc-number i {
+    font-size: 20px;
   }
 </style>
