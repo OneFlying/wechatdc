@@ -43,18 +43,21 @@
           <scroller lock-x scrollerbar-y height="-190+'px'">
             <div class="wxdc-menu-box">
               <ul>
-                <li class="vux-1px-b" v-for="sort in sorts" :class="active === sort ? 'active' : ''"><span>{{ sort }}</span></li>
+                <li @click="activemenu(sort,$index)"
+                  class="vux-1px-b"
+                  v-for="sort in sorts"
+                  :class="active === sort ? 'active' : ''"><badge text="0" class="wxdc-menu-box-li-badge"></badge><span>{{ sort }}</span></li>
               </ul>
             </div>
           </scroller>
         </div>
         <div class="content">
-          <scroller lock-x scrollbar-y height="-150+'px'">
+          <scroller lock-x scrollbar-y height="-150+'px'" v-ref:scroller>
             <div class="wxdc_weui_media" style="padding-bottom: 60px">
               <group v-for="sort in sorts" :title="sort" style="margin-top: -5px;">
                 <a class="weui_media_box weui_media_appmsg"
                    style="padding-right: 5px; padding-left: 10px"
-                   v-for="good in list" @click="detail">
+                   v-for="good in list" @click="detail($index)">
                   <div class="weui_media_hd" style="width: 45px;">
                     <img class="weui_media_appmsg_thumb" alt="" src="http://placeholder.qiniudn.com/60x60/3cc51f/ffffff">
                   </div>
@@ -68,11 +71,11 @@
                       <cell class="wxdc_weui_media_title wxdc_weui_media_title_noborder" style="padding-right: 10px">
                         <span slot="icon" style="color: #ff6000; font-size: 14px;">&#165;35</span>
                         <span slot="value" class="wxdc-number">
-                          <span class="wxdc-number-move" @click.stop.prevent="remove">
+                          <span class="wxdc-number-move" @click.stop.prevent="remove($index)">
                             <i class="iconfont icon-move"></i>
                           </span>
-                          <span class="wxdc-number-number">0</span>
-                          <span class="wxdc-number-add" @click.stop.prevent="add">
+                          <span class="wxdc-number-number">{{ good.number }}</span>
+                          <span class="wxdc-number-add" @click.stop.prevent="add($index)">
                             <i class="iconfont icon-add"></i>
                           </span>
                         </span>
@@ -114,7 +117,8 @@
     Tab,
     TabItem,
     XNumber,
-    Group
+    Group,
+    Badge
   } from 'vux/src/components'
 
   export default {
@@ -127,23 +131,33 @@
       Tab,
       TabItem,
       XNumber,
-      Group
+      Group,
+      Badge
     },
     methods: {
       back () {
+        // 后退按钮
         window.history.go(-1)
       },
-      remove () {
+      remove (index) {
         // 移除购物车
-        window.alert(-1)
+        window.alert(index)
       },
-      add () {
+      add (index) {
         // 添加购物车
-        window.alert(1)
+        window.alert(index)
       },
-      detail () {
+      detail (index) {
         // 显示商品详情
-        window.alert(2)
+        window.alert(index)
+      },
+      activemenu (sort, index) {
+        this.active = sort
+        this.$nextTick(() => {
+          this.$refs.scroller.reset({
+            top: index === 0 ? 0 : 90 * 6 * index + 44 * index
+          })
+        })
       }
     },
     data () {
@@ -184,6 +198,11 @@
     },
     created () {
       // @params name id 通过 this.$route.params 获取
+    },
+    ready () {
+      this.$nextTick(() => {
+        this.$refs.scroller.reset()
+      })
     }
   }
 </script>
@@ -202,15 +221,42 @@
   .wxdc-menu-box ul {
     width: 75px;
   }
-  .wxdc-menu-box li{
+  .wxdc-menu-box li {
     text-align: left;
     padding: 15px 5px;
     font-size: 14px;
     line-height: 20px;
     color: #666;
+    position: relative;
+  }
+  .wxdc-menu-box li .wxdc-menu-box-li-badge {
+    position: absolute;
+    right: 2px;
+    top: 2px;
+    font-size: 10px;
+    height: 12px;
+    line-height: 12px;
+    padding: 0 4px;
+  }
+  .wxdc-menu-box li .wxdc-menu-box-li-badge.vux-badge-single {
+    width: 12px;
+    padding: 0;
   }
   .wxdc-menu-box li.active {
     background: #fff;
+  }
+  .wxdc-menu-box li.active:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    transform-origin: 0 0;
+    height: 90%;
+    top: 5%;
+    width: 2px;
+    border-left: 2px solid #26a2ff;
+    background-color: #26a2ff;
+    transform: scaleX(0.5);
+    transition: all .3s ease;
   }
   .content {
     padding-left: -10px;
