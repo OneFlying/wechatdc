@@ -44,9 +44,9 @@
             <div class="wxdc-menu-box">
               <ul>
                 <li @click="activemenu(sort,$index)"
-                  class="vux-1px-b"
-                  v-for="sort in sorts"
-                  :class="active === sort ? 'active' : ''"><badge text="0" class="wxdc-menu-box-li-badge"></badge><span>{{ sort }}</span></li>
+                    class="vux-1px-b"
+                    v-for="sort in sorts"
+                    :class="active === sort ? 'active' : ''"><badge text="0" class="wxdc-menu-box-li-badge"></badge><span>{{ sort }}</span></li>
               </ul>
             </div>
           </scroller>
@@ -89,9 +89,31 @@
         </div>
       </div>
     </scroller>
+    <!-- 购物车 -->
+    <popup :show.sync="show" style="bottom:48px;max-height: 360px;height: auto;overflow: hidden;">
+      <group title="购物车" class="wxdc-cart-cart">
+        <span @click="clearcart" class="wxdc-cart-clear">
+          <span class="iconfont icon-delete_light" style="font-size: 16px;"></span>清空
+        </span>
+        <div style="overflow-y: auto;overflow-x: hidden;-webkit-overflow-scrolling: touch; max-height:320px;">
+          <cell v-for="i in 15" title="菜品名称">
+            <span slot="value" class="wxdc-cart-sale">&#165;20</span>
+            <span slot="value" class="wxdc-number">
+              <span class="wxdc-number-move">
+                <i class="iconfont icon-move"></i>
+              </span>
+              <span class="wxdc-number-number">1</span>
+              <span class="wxdc-number-add">
+                <i class="iconfont icon-add"></i>
+              </span>
+            </span>
+          </cell>
+        </div>
+      </group>
+    </popup>
     <!-- footer slot -->
-    <tabbar slot="bottom" class="wxdc-store-bot">
-      <div class="wxdc-store-cart">
+    <tabbar slot="bottom" class="wxdc-store-bot" style="z-index: 1000;">
+      <div class="wxdc-store-cart" @click="showcart">
         <span class="iconfont icon-cartfill" style="font-size: 32px"></span>
       </div>
       <div class="wxdc-store-bot-inner">
@@ -118,7 +140,8 @@
     TabItem,
     XNumber,
     Group,
-    Badge
+    Badge,
+    Popup
   } from 'vux/src/components'
 
   export default {
@@ -132,7 +155,8 @@
       TabItem,
       XNumber,
       Group,
-      Badge
+      Badge,
+      Popup
     },
     methods: {
       back () {
@@ -158,12 +182,20 @@
             top: index === 0 ? 0 : 90 * 6 * index + 44 * index
           })
         })
+      },
+      showcart () {
+        // 显示购物车
+        this.show ? this.show = false : this.show = true
+      },
+      clearcart () {
+        // 清空购物车
       }
     },
     data () {
       return {
         state: 0,
         count: 35,
+        show: false,
         carts: [], // 购物车
         list2: ['商品', '商家'],
         demo2: '商品',
@@ -352,17 +384,17 @@
   .wxdc-number > span {
     display: inline-block;
     font-size: 16px;
-    width: 23px;
-    height: 23px;
-    line-height: 23px;
+    width: 21px;
+    height: 21px;
+    line-height: 21px;
     border-radius: 100%;
     text-align: center;
   }
   .wxdc-number > span.wxdc-number-move {
     border: 2px solid #26a2ff;
-    width: 20px;
-    height: 20px;
-    line-height: 20px;
+    width: 18px;
+    height: 18px;
+    line-height: 18px;
     color: #26a2ff;
   }
   .wxdc-number-add {
@@ -378,5 +410,29 @@
   }
   .wxdc-number i {
     font-size: 20px;
+  }
+  .wxdc-number .wxdc-number-move i {
+    font-size: 19px;
+  }
+  .wxdc-cart-cart {
+    position: relative;
+  }
+  .wxdc-cart-cart .wxdc-cart-clear {
+    position: fixed;
+    right: 0;
+    margin-top: -40px;
+    font-size: 14px;
+    color: #888;
+    line-height: 38px;
+    padding: 0 10px;
+  }
+  .wxdc-cart-cart .weui_cell {
+    padding: 13px 15px;
+  }
+  /* 单价 */
+  .wxdc-cart-sale {
+    color: #f60;
+    margin-right: 10px;
+    font-size: 16px;
   }
 </style>

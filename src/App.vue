@@ -210,5 +210,10 @@
     white-space: nowrap;
     font-size: 10px;
   }
+  /* 购物车 */
+  .wxdc-cart-cart > .weui_cells_title {
+    margin-top: 0.6em;
+    margin-bottom: 0.6em;
+  }
 </style>
 
