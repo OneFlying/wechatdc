@@ -1,5 +1,5 @@
 <template>
-  <div style="height:100%" class="wxdc-base">
+  <div style="height:100%" class="wxdc-base" :class="$device.isAndroid ? 'wxdc-android': 'wxdc-ios'">
     <loading :show="getLoading" position="absolute" text="加载中..."></loading>
     <view-box v-ref:view-box>
       <!-- default slot -->

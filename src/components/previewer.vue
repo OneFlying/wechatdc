@@ -83,7 +83,11 @@
         default: false
       },
       img: String,
-      showlist: false
+      showlist: false,
+      list: {
+        type: Array,
+        default: []
+      }
     },
     methods: {
       hidepreviewer () {
@@ -120,6 +124,9 @@
     height: 100%;
     width: 100%;
     overflow: hidden;
+  }
+  .wxdc-android .wxdc-previewer-mask {
+    background: rgba(0,0,0,0.75);
   }
   .showscale-transition {
     transform: scale(1);

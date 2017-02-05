@@ -90,15 +90,16 @@
       </div>
     </scroller>
     <!-- 购物车 -->
-    <popup :show.sync="show" style="bottom:48px;max-height: 360px;height: auto;overflow: hidden;">
+    <popup :show.sync="show" style="bottom:48px;max-height: 360px;overflow: hidden;">
       <group title="购物车" class="wxdc-cart-cart">
         <span @click="clearcart" class="wxdc-cart-clear">
           <span class="iconfont icon-delete_light" style="font-size: 16px;"></span>清空
         </span>
-        <div style="overflow-y: auto;overflow-x: hidden;-webkit-overflow-scrolling: touch; max-height:320px;">
-          <cell v-for="i in 15" title="菜品名称">
-            <span slot="value" class="wxdc-cart-sale">&#165;20</span>
-            <span slot="value" class="wxdc-number">
+        <scroller lock-x height="320px" v-ref:scrollercart>
+          <div style="padding-bottom: 10px">
+            <cell v-for="i in 15" title="菜品名称">
+              <span slot="value" class="wxdc-cart-sale">&#165;20</span>
+              <span slot="value" class="wxdc-number">
               <span class="wxdc-number-move">
                 <i class="iconfont icon-move"></i>
               </span>
@@ -107,8 +108,9 @@
                 <i class="iconfont icon-add"></i>
               </span>
             </span>
-          </cell>
-        </div>
+            </cell>
+          </div>
+        </scroller>
       </group>
     </popup>
     <!-- footer slot -->
@@ -242,6 +244,7 @@
     ready () {
       this.$nextTick(() => {
         this.$refs.scroller.reset()
+        this.$refs.scrollercart.reset()
       })
     }
   }
@@ -311,6 +314,9 @@
     background: rgba(0,0,0,0.25);
     backdrop-filter: blur(10px);
   }
+  .wxdc-android .wxdc-header-inner {
+    background: rgba(0,0,0,0.8);
+  }
   .wxdc-header-inner .weui_media_box {
     filter: blur(-5px);
   }
@@ -336,6 +342,9 @@
     height: 48px;
     width: 100%;
     backdrop-filter: blur(5px);
+  }
+  .wxdc-android .wxdc-store-bot-inner {
+    background-color: rgba(61,61,63,1);
   }
   .wxdc-store-cart {
     position: absolute;

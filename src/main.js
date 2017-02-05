@@ -14,6 +14,11 @@ Vue.use(VueTouch)
 Vue.use(VueResource)
 Vue.config.devtools = true
 
+// plugins
+import Device from 'vux/src/plugins/device'
+
+Vue.use(Device)
+
 /**
  * sync router params
  */
