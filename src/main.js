@@ -66,6 +66,12 @@ import Order from './views/Order'
 import Me from './views/Me'
 import Store from './views/Store'
 import UserInfo from './views/UserInfo'
+import Setting from './views/Setting'
+import Commit from './views/Commit'
+import Ticket from './views/Ticket'
+import OrderDetail from './views/OrderDetail'
+import Warn from './views/Warn'
+import Help from './views/Help'
 
 router.map({
   '/': {
@@ -87,9 +93,27 @@ router.map({
     name: 'store',
     component: Store
   },
-  '/userinfo/:id': {
+  '/userinfo': {
     name: 'userinfo',
     component: UserInfo
+  },
+  '/commit': {
+    component: Commit
+  },
+  '/help': {
+    component: Help
+  },
+  '/orderdetail': {
+    component: OrderDetail
+  },
+  '/setting': {
+    component: Setting
+  },
+  '/ticket': {
+    component: Ticket
+  },
+  '/warn': {
+    component: Warn
   }
 })
 
