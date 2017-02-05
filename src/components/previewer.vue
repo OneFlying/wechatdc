@@ -12,10 +12,10 @@
     <div class="wxdc-previewer-mask" v-show="show"></div>
     <!-- 主体框 -->
     <div class="wxdc-previewer" v-if="show" transition="showscale">
-      <scroller lock-x scrollbar-y v-ref:scroller height="-0+'px'">
+      <scroller lock-x scrollbar-y v-ref:scrollerl height="-0+'px'">
         <div>
           <div v-touch:pan="fixpic"
-               v-touch-options:pan="{ direction: 'horizontal', threshold: 50 }"
+               v-touch-options:pan="{ threshold: 50 }"
                class="wxdc-previewer-top" id="previewer_top">
             <div class="wxdc-previewer-pic">
               <img alt="logo" :src="img">
@@ -95,14 +95,9 @@
         this.showlist = true
         document.querySelector('#previewer_top').className = 'wxdc-previewer-top nofix'
         this.$nextTick(() => {
-          this.$refs.scroller.reset()
+          this.$refs.scrollerl.reset()
         })
       }
-    },
-    ready () {
-      this.$nextTick(() => {
-        this.$refs.scroller.reset()
-      })
     }
   }
 </script>
