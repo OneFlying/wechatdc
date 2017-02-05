@@ -75,6 +75,9 @@
     created () {
       this.setAD()
       this.setList()
+      document.addEventListener('touchmove', function (e) {
+        e.preventDefault()
+      }, false)
     }
   }
 </script>
@@ -87,6 +90,11 @@
   }
   body {
     background-color: #eee;
+    -webkit-overflow-scrolling: touch;
+    overflow: hidden;
+  }
+  .weui_tab, .weui_tab_bd {
+    overflow: hidden !important;
   }
   .wxdc-base .weui_tabbar_item {
     color: #888;
@@ -214,6 +222,42 @@
   .wxdc-cart-cart > .weui_cells_title {
     margin-top: 0.6em;
     margin-bottom: 0.6em;
+  }
+  .wxdc-number {
+    padding: 0 0;
+  }
+  .wxdc-number > span {
+    display: inline-block;
+    font-size: 16px;
+    width: 21px;
+    height: 21px;
+    line-height: 21px;
+    border-radius: 100%;
+    text-align: center;
+  }
+  .wxdc-number > span.wxdc-number-move {
+    border: 2px solid #26a2ff;
+    width: 18px;
+    height: 18px;
+    line-height: 18px;
+    color: #26a2ff;
+  }
+  .wxdc-number-add {
+    background: #26a2ff;
+    color: #fff;
+  }
+  .wxdc-number > span.wxdc-number-number {
+    width: 30px;
+    height: 20px;
+    text-align: center;
+    border-radius: 0;
+    line-height: 24px;
+  }
+  .wxdc-number i {
+    font-size: 20px;
+  }
+  .wxdc-number .wxdc-number-move i {
+    font-size: 19px;
   }
 </style>
 

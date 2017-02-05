@@ -3,15 +3,15 @@
 * 商家详情
 */
 <template>
-  <div>
+  <div style="overflow: hidden">
     <scroller lock-x lock-y>
       <div style="padding-bottom: 20px">
         <div class="wxdc-header" slot="header"
-             style="background-image:url('http://placeholder.qiniudn.com/60x60/3cc51f/ffffff')">
+             style="background-image:url('http://img4.imgtn.bdimg.com/it/u=3037353591,3801722723&fm=214&gp=0.jpg')">
           <div class="wxdc-header-inner">
             <a class="weui_media_box weui_media_appmsg" style="padding: 5px 10px">
               <div class="weui_media_hd">
-                <img class="weui_media_appmsg_thumb" alt="logo" src="http://placeholder.qiniudn.com/60x60/3cc51f/ffffff">
+                <img class="weui_media_appmsg_thumb" alt="logo" src="http://img4.imgtn.bdimg.com/it/u=3037353591,3801722723&fm=214&gp=0.jpg">
               </div>
               <div class="weui_media_bd">
                 <h4 class="weui_media_title" style="color:#fff;">杨明宇黄猛击米饭</h4>
@@ -126,6 +126,10 @@
         </div>
       </div>
     </tabbar>
+    <!-- 商品详情 -->
+    <previewer
+      :show.sync="showpreviewer"
+      img="http://img4.imgtn.bdimg.com/it/u=3037353591,3801722723&fm=214&gp=0.jpg"></previewer>
   </div>
 </template>
 
@@ -144,6 +148,8 @@
     Popup
   } from 'vux/src/components'
 
+  import previewer from '../components/previewer.vue'
+
   export default {
     components: {
       Scroller,
@@ -156,7 +162,8 @@
       XNumber,
       Group,
       Badge,
-      Popup
+      Popup,
+      previewer
     },
     methods: {
       back () {
@@ -173,7 +180,7 @@
       },
       detail (index) {
         // 显示商品详情
-        window.alert(index)
+        this.showpreviewer = true
       },
       activemenu (sort, index) {
         this.active = sort
@@ -196,6 +203,7 @@
         state: 0,
         count: 35,
         show: false,
+        showpreviewer: false,
         carts: [], // 购物车
         list2: ['商品', '商家'],
         demo2: '商品',
@@ -300,8 +308,11 @@
     background-size: cover;
   }
   .wxdc-header-inner {
-    background: rgba(0,0,0,0.5);
-    backdrop: blur(10px);
+    background: rgba(0,0,0,0.25);
+    backdrop-filter: blur(10px);
+  }
+  .wxdc-header-inner .weui_media_box {
+    filter: blur(-5px);
   }
   .wxdc-header a.weui_media_box:active {
     background-color: transparent;
@@ -378,42 +389,6 @@
     padding: 2px 0;
   }
   /* 添加或删除购物车 */
-  .wxdc-number {
-    padding: 0 0;
-  }
-  .wxdc-number > span {
-    display: inline-block;
-    font-size: 16px;
-    width: 21px;
-    height: 21px;
-    line-height: 21px;
-    border-radius: 100%;
-    text-align: center;
-  }
-  .wxdc-number > span.wxdc-number-move {
-    border: 2px solid #26a2ff;
-    width: 18px;
-    height: 18px;
-    line-height: 18px;
-    color: #26a2ff;
-  }
-  .wxdc-number-add {
-    background: #26a2ff;
-    color: #fff;
-  }
-  .wxdc-number > span.wxdc-number-number {
-    width: 30px;
-    height: 20px;
-    text-align: center;
-    border-radius: 0;
-    line-height: 24px;
-  }
-  .wxdc-number i {
-    font-size: 20px;
-  }
-  .wxdc-number .wxdc-number-move i {
-    font-size: 19px;
-  }
   .wxdc-cart-cart {
     position: relative;
   }
