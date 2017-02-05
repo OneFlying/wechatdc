@@ -132,3 +132,6 @@ router.afterEach(function (transition) {
 
 router.start(App, '#app')
 
+window.Vue = Vue
+window.router = router
+

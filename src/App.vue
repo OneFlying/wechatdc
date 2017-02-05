@@ -65,7 +65,8 @@
     },
     computed: {
       isstore () {
-        if (this.$route.path.indexOf('store') !== -1) {
+        let path = this.$route.path
+        if (path.indexOf('store') !== -1 || path.indexOf('orderdetail') !== -1) {
           return true
         } else {
           return false

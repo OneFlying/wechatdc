@@ -51,7 +51,7 @@
           <cell title="我的优惠券" is-link>
             <span slot="icon" class="iconfont icon-ticket" style="color:#ff5f3e"></span>
           </cell>
-          <cell title="历史订单" is-link>
+          <cell title="历史订单" is-link v-link="{path:'/order'}">
             <span slot="icon" class="iconfont icon-formfill" style="color:#6ac20b"></span>
           </cell>
           <cell title="我的评价" is-link>
