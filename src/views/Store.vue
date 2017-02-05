@@ -95,7 +95,7 @@
         <span @click="clearcart" class="wxdc-cart-clear">
           <span class="iconfont icon-delete_light" style="font-size: 16px;"></span>清空
         </span>
-        <scroller lock-x height="320px" v-ref:scrollercart>
+        <scroller lock-x scrollbar-y height="320px" v-ref:scrollercart>
           <div style="padding-bottom: 10px">
             <cell v-for="i in 15" title="菜品名称">
               <span slot="value" class="wxdc-cart-sale">&#165;20</span>
@@ -195,6 +195,9 @@
       showcart () {
         // 显示购物车
         this.show ? this.show = false : this.show = true
+        this.$nextTick(() => {
+          this.$refs.scrollercart.reset()
+        })
       },
       clearcart () {
         // 清空购物车
@@ -251,8 +254,6 @@
 </script>
 
 <style scoped lange="less">
-  @import "../assets/font/iconfont.css";
-
   .menu {
     width: 75px;
     float: left;

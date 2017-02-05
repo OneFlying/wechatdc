@@ -65,6 +65,7 @@ import Shop from './views/Shop'
 import Order from './views/Order'
 import Me from './views/Me'
 import Store from './views/Store'
+import UserInfo from './views/UserInfo'
 
 router.map({
   '/': {
@@ -85,6 +86,10 @@ router.map({
   'store/:id/:name': {
     name: 'store',
     component: Store
+  },
+  '/userinfo/:id': {
+    name: 'userinfo',
+    component: UserInfo
   }
 })
 

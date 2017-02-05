@@ -259,7 +259,6 @@
   }
 </script>
 <style>
-  @import "../assets/font/iconfont.css";
   /* 必需 */
   .expand-transition {
     transition: all .3s ease;
