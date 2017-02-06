@@ -1,10 +1,10 @@
 
 @font-face {font-family: "iconfont";
-  src: url('iconfont.eot?t=1486297153960'); /* IE9*/
-  src: url('iconfont.eot?t=1486297153960#iefix') format('embedded-opentype'), /* IE6-IE8 */
-  url('iconfont.woff?t=1486297153960') format('woff'), /* chrome, firefox */
-  url('iconfont.ttf?t=1486297153960') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
-  url('iconfont.svg?t=1486297153960#iconfont') format('svg'); /* iOS 4.1- */
+  src: url('iconfont.eot?t=1486303401355'); /* IE9*/
+  src: url('iconfont.eot?t=1486303401355#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('iconfont.woff?t=1486303401355') format('woff'), /* chrome, firefox */
+  url('iconfont.ttf?t=1486303401355') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+  url('iconfont.svg?t=1486303401355#iconfont') format('svg'); /* iOS 4.1- */
 }
 
 .iconfont {
@@ -328,6 +328,8 @@
 .icon-mail:before { content: "\e7bd"; }
 
 .icon-peoplelist:before { content: "\e7be"; }
+
+.icon-yiguoqi:before { content: "\e692"; }
 
 .icon-exit:before { content: "\e7cb"; }
 
