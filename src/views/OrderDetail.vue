@@ -91,7 +91,6 @@
         if (scale >= 100) scale = 100
         scale = scale / 100
         document.querySelector('.wxdc-order-detail-pic').style.transform = 'scale(' + scale + ')'
-        console.log(e.deltaY)
       },
       showActionSheet () {
         this.showactionsheet ? this.showactionsheet = false : this.showactionsheet = true
