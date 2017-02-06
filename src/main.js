@@ -72,6 +72,9 @@ import Ticket from './views/Ticket'
 import OrderDetail from './views/OrderDetail'
 import Warn from './views/Warn'
 import Help from './views/Help'
+import Mobile from './views/sub/Mobile'
+import Password from './views/sub/Password'
+import UserName from './views/sub/UserName'
 
 router.map({
   '/': {
@@ -114,6 +117,15 @@ router.map({
   },
   '/warn': {
     component: Warn
+  },
+  '/mobile': {
+    component: Mobile
+  },
+  '/password': {
+    component: Password
+  },
+  '/username': {
+    component: UserName
   }
 })
 

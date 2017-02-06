@@ -5,13 +5,13 @@
 <template>
   <div class="wxdc-me" style="height: 100%">
     <x-header title="我的" :left-options="{showBack:true,backText:'返回'}" slot="header">
-      <span slot="right" style="color: #fff;padding: 10px;margin-top: -10px;margin-right: -10px">
+      <span slot="right" style="color: #fff;padding: 10px;margin-top: -10px;margin-right: -10px" v-link="{path:'/setting'}">
         <span class="iconfont icon-settings" style="font-size: 20px"></span>
       </span>
     </x-header>
     <scroller lock-x v-ref:scroller height="-95+'px'">
       <div style="padding-bottom: 20px">
-        <group style="margin-top: -20px" class="wxdc-me-header">
+        <group style="margin-top: -20px" class="wxdc-me-header" v-link="{path:'/userinfo'}">
           <div class="weui_cell" style="background: #26a2ff;padding: 20px 15px;">
             <div class="weui_cell_hd">
               <span class="wxdc-me-pic">
@@ -67,7 +67,7 @@
           </cell>
         </group>
         <group class="wxdc-me-menu">
-          <cell title="设置" is-link>
+          <cell title="设置" is-link v-link="{path:'/setting'}">
             <span slot="icon" class="iconfont icon-settings" style="color:#555"></span>
           </cell>
         </group>

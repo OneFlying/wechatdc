@@ -66,10 +66,11 @@
     computed: {
       isstore () {
         let path = this.$route.path
-        if (path.indexOf('store') !== -1 || path.indexOf('orderdetail') !== -1) {
-          return true
-        } else {
+        if ((path.indexOf('order') !== -1 && path.indexOf('detail') === -1) ||
+          path.indexOf('shop') !== -1 || path === '/' || path.indexOf('me') !== -1) {
           return false
+        } else {
+          return true
         }
       }
     },
