@@ -228,20 +228,21 @@
   .wxdc-number {
     padding: 0 0;
   }
-  .wxdc-number > span {
+  .wxdc-number > span, .wxdc-number > a {
     display: inline-block;
     font-size: 16px;
-    width: 21px;
-    height: 21px;
-    line-height: 21px;
+    width: 22px;
+    height: 22px;
+    line-height: 22px;
     border-radius: 100%;
     text-align: center;
   }
-  .wxdc-number > span.wxdc-number-move {
+  .wxdc-number > span.wxdc-number-move,
+  .wxdc-number > a.wxdc-number-move {
     border: 2px solid #26a2ff;
     width: 18px;
     height: 18px;
-    line-height: 18px;
+    line-height: 19px;
     color: #26a2ff;
   }
   .wxdc-number-add {

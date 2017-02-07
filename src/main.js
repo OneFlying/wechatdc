@@ -16,8 +16,11 @@ Vue.config.devtools = true
 
 // plugins
 import Device from 'vux/src/plugins/device'
-
 Vue.use(Device)
+
+// filters
+import filters from './filters'
+filters(Vue)
 
 /**
  * sync router params

@@ -9,3 +9,4 @@ export const getAD = ({ test }) => test.ad
 export const getList = ({ test }) => test.list
 export const getShopList = ({ test }) => test.shop
 export const getShopFooter = ({ test }) => test.footer
+export const getStore = ({ test }) => test.goods

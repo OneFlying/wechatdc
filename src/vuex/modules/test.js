@@ -10,14 +10,17 @@ import {
   SET_SHOP_LIST,
   GET_SHOP_LIST,
   GET_SHOP_FOOTER,
-  SET_SHOP_FOOTER
+  SET_SHOP_FOOTER,
+  SET_STORE,
+  GET_STORE
 } from '../mutations-type'
 
 let state = {
   ad: [],
   list: '',
   shop: '',
-  footer: ''
+  footer: '',
+  goods: ''
 }
 
 const mutations = {
@@ -44,6 +47,12 @@ const mutations = {
   },
   [SET_SHOP_FOOTER] (state, footer) {
     state.footer = footer
+  },
+  [SET_STORE] (state, goods) {
+    state.goods = goods
+  },
+  [GET_STORE] (state) {
+    return state.goods
   }
 }
 

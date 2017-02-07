@@ -17,3 +17,8 @@ export const setShopFooter = ({ dispatch }) => {
   let footer = require('../mock/test').footer
   dispatch('SET_SHOP_FOOTER', footer)
 }
+
+export const setStore = ({ dispatch }) => {
+  let goods = require('../mock/store').menus
+  dispatch('SET_STORE', goods)
+}

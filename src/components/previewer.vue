@@ -83,11 +83,7 @@
         default: false
       },
       img: String,
-      showlist: false,
-      list: {
-        type: Array,
-        default: []
-      }
+      showlist: false
     },
     methods: {
       hidepreviewer () {

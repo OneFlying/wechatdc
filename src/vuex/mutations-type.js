@@ -14,3 +14,7 @@ export const GET_SHOP_LIST = 'GET_SHOP_LIST'
 export const SET_SHOP_LIST = 'SET_SHOP_LIST'
 export const SET_SHOP_FOOTER = 'SET_SHOP_FOOTER'
 export const GET_SHOP_FOOTER = 'GET_SHOP_FOOTER'
+
+// 购物环节
+export const GET_STORE = 'GET_STORE'
+export const SET_STORE = 'SET_STORE'
