@@ -10,7 +10,7 @@ new Vue({
   }
 })
 
-如果你有使用vue-route的话，你可以：
+如果你有使用vue-cli构建项目的话，你可以：
 
 import wx from 'weixin-js-sdk'
 
