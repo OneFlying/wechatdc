@@ -1,2 +1,11 @@
+# 微信JSSDK调用
+``` bash
 import wx from 'weixin-js-sdk'
-ready 钩子方法中调用wx.config()
+
+new Vue({
+  ready () {
+    wx.config({
+      // your config lists
+    })
+  }
+})
