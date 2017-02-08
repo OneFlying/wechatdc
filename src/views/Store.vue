@@ -39,7 +39,7 @@
         <scroller lock-x height="-190+'px'" v-ref:scrollermenu>
           <div class="wxdc-menu-box">
             <ul>
-              <li @click="activemenu(sort,$index)"
+              <li @click="activemenu(sort.name,$index)"
                   class="vux-1px-b"
                   v-for="sort in list"
                   :class="active === sort.name ? 'active' : ''">
@@ -50,7 +50,7 @@
         </scroller>
       </div>
       <div class="content">
-        <scroller lock-x scrollbar-y height="-150+'px'" v-ref:scroller>
+        <scroller lock-x scrollbar-y height="-150+'px'" v-ref:scroller @on-scroll="onscroll">
           <div class="wxdc_weui_media" style="padding-bottom: 60px">
             <group v-for="(index,sort) in list" :title="sort.name" style="margin-top: -5px;">
               <a class="weui_media_box weui_media_appmsg"
@@ -101,16 +101,16 @@
         <span @click="clearcart" class="wxdc-cart-clear">
           <span class="iconfont icon-delete_light" style="font-size: 16px;"></span>清空
         </span>
-        <scroller lock-x scrollbar-y height="320px" v-ref:scrollercart>
+        <scroller lock-x scrollbar-y :height="height" v-ref:scrollercart>
           <div style="padding-bottom: 10px">
-            <cell v-for="i in 15" title="菜品名称">
-              <span slot="value" class="wxdc-cart-sale">&#165;20</span>
+            <cell v-for="cart in carts" :title="list[cart.sort].foods[cart.good].name">
+              <span slot="value" class="wxdc-cart-sale">&#165;{{ list[cart.sort].foods[cart.good].specfoods[0].price }}</span>
               <span slot="value" class="wxdc-number">
-              <span class="wxdc-number-move">
+              <span class="wxdc-number-move" @click.stop.prevent="remove(cart.good, cart.sort)">
                 <i class="iconfont icon-move"></i>
               </span>
-              <span class="wxdc-number-number">1</span>
-              <span class="wxdc-number-add">
+              <span class="wxdc-number-number">{{ list[cart.sort].foods[cart.good].number }}</span>
+              <span class="wxdc-number-add" @click.stop.prevent="add(cart.good, cart.sort)">
                 <i class="iconfont icon-add"></i>
               </span>
             </span>
@@ -121,16 +121,21 @@
     </popup>
     <!-- footer slot -->
     <tabbar slot="bottom" class="wxdc-store-bot" style="z-index: 1000;">
-      <div class="wxdc-store-cart" @click="showcart">
+      <div
+        class="wxdc-store-cart"
+        :class="badge === 0 ? '' : 'active'"
+        @click="showcart">
+        <badge :text="badge+''"></badge>
         <span class="iconfont icon-cartfill" style="font-size: 32px"></span>
       </div>
       <div class="wxdc-store-bot-inner">
         <div class="wxdc-store-count">
-          <p>&#165;35</p>
-          <span>另需配送费5月</span>
+          <p>&#165;{{ cash }}</p>
+          <span>另需配送费{{ psf }}元</span>
         </div>
         <div class="wxdc-store-btn">
-          <a href="javascript:;">还差&#165;0起送</a>
+          <a href="javascript:;" v-if="cash-psf<=0">还差&#165;{{ Math.abs(cash-qsf) }}起送</a>
+          <a v-link="{path:'/checkorder'}" v-else class="wxdc-green">去结算</a>
         </div>
       </div>
     </tabbar>
@@ -189,35 +194,76 @@
       },
       remove (good, sort) {
         // 移除购物车
+        this.badge -= 1
         this.list[sort].numbers -= 1
-        this.list[sort].foods[good].number -= 1
+        let num = this.list[sort].foods[good].number -= 1
+        this.cash -= this.list[sort].foods[good].specfoods[0].price
+        if (num === 0) {
+          this.removeitem(good)
+          if (this.carts.length === 0) {
+            this.show = false
+          } else {
+            this.height = this.carts.length > 6 ? '320px' : this.carts.length * 50 + 20 + 'px'
+            this.$nextTick(() => {
+              this.$refs.scrollercart.reset()
+            })
+          }
+        }
       },
       add (good, sort) {
         // 添加购物车
+        this.badge += 1
         this.list[sort].numbers += 1
         this.list[sort].foods[good].number += 1
+        this.cash += this.list[sort].foods[good].specfoods[0].price
+        if (!this.contains(this.carts, good)) {
+          let obj = {
+            'good': good,
+            'sort': sort
+          }
+          this.carts.push(obj)
+        }
       },
       detail (good, sort) {
         // 显示商品详情
         this.showpreviewer = true
       },
       activemenu (sort, index) {
+        let top = this.scroll[index]
         this.active = sort
         this.$nextTick(() => {
           this.$refs.scroller.reset({
-            top: index === 0 ? 0 : 90 * 6 * index + 44 * index
+            top: top
           })
+        })
+      },
+      onscroll (pos) {
+        this.scroll.forEach((e, i) => {
+          if (pos.top >= e) {
+            this.active = this.list[i].name
+          }
         })
       },
       showcart () {
         // 显示购物车
-        this.show ? this.show = false : this.show = true
-        this.$nextTick(() => {
-          this.$refs.scrollercart.reset()
-        })
+        if (this.carts.length !== 0) {
+          this.height = this.carts.length > 6 ? '320px' : this.carts.length * 50 + 20 + 'px'
+          this.show ? this.show = false : this.show = true
+          this.$nextTick(() => {
+            this.$refs.scrollercart.reset()
+          })
+        }
       },
       clearcart () {
         // 清空购物车
+        this.carts.forEach((e, i) => {
+          this.list[e.sort].numbers = 0
+          this.list[e.sort].foods[e.good].number = 0
+        })
+        this.carts = []
+        this.badge = 0
+        this.cash = 0
+        this.show = false
       },
       copyArr (arr) {
         // 对象浅复制
@@ -228,18 +274,38 @@
             return e
           }
         })
+      },
+      // 购物车是否存在某件商品
+      contains (arr, good) {
+        let res = false
+        arr.map((e) => {
+          if (e.good === good) res = true
+        })
+        return res
+      },
+      removeitem (good) {
+        let self = this
+        this.carts.map((e, i) => {
+          if (e.good === good) {
+            self.carts.splice(i, 1)
+          }
+        })
       }
     },
     data () {
       return {
-        state: 0,
-        count: 35,
-        show: false,
-        showpreviewer: false,
+        cash: 0, // 购物车总金额
+        qsf: 20, // 起送价
+        psf: 5, // 配送费
+        show: false, // 显示购物车
+        badge: 0, // 购物车小标
+        showpreviewer: false, // 显示商品详情
         carts: [], // 购物车
-        list2: ['商品', '商家'],
-        demo2: '商品',
-        active: '披萨',
+        list2: ['商品', '商家'], // tabbar切换
+        demo2: '商品', // tabbar active item
+        active: '披萨', // 商品类型 active item
+        height: '320px', // 购物车弹窗高度
+        scroll: [], // 页面滚动距离
         list: [] // 商品列表
       }
     },
@@ -255,11 +321,23 @@
       // @params name id 通过 this.$route.params 获取
       getData().then(replys => {
         this.list = replys
+        this.active = this.list[0].name
         this.list.forEach((reply, i) => {
           window.Vue.util.defineReactive(reply, 'numbers', 0)
-          reply.foods.forEach((food, i) => {
+          reply.foods.forEach((food) => {
             window.Vue.util.defineReactive(food, 'number', 0)
           })
+          // 设定滚动距离
+          if (i === 0) {
+            this.scroll.push(0)
+          } else {
+            let top = 0
+            for (let t = 0; t < i; t++) {
+              top += 90 * this.list[t].foods.length
+            }
+            top += 32 * i
+            this.scroll.push(top)
+          }
         })
         this.$nextTick(() => {
           this.$refs.scroller.reset()
@@ -4178,6 +4256,15 @@
     color: #67676b;
     text-align: center;
   }
+  .wxdc-store-cart.active {
+    background: #26a2ff;
+    color: #fff;
+  }
+  .wxdc-store-cart .vux-badge {
+    position: absolute;
+    right: -5px;
+    top: -5px;
+  }
   .wxdc-store-count {
     padding-left: 80px;
     float: left;
@@ -4253,5 +4340,9 @@
   }
   .expandnumber-enter, .expandnumber-leave {
     transform: rotate(-10deg) translateX(15px) translateY(-8px);
+  }
+  .wxdc-store-btn a.wxdc-green {
+    background-color: #4cd964;
+    color: #fff;
   }
 </style>
