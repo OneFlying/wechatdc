@@ -4,7 +4,7 @@
 */
 <template>
   <div class="wxdc-me" style="height: 100%">
-    <x-header title="我的" :left-options="{showBack:true,backText:'返回'}" slot="header">
+    <x-header title="我的" :left-options="{showBack:false,backText:'返回'}" slot="header">
       <span slot="right" style="color: #fff;padding: 10px;margin-top: -10px;margin-right: -10px" v-link="{path:'/setting'}">
         <span class="iconfont icon-settings" style="font-size: 20px"></span>
       </span>

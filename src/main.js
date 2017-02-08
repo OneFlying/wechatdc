@@ -75,9 +75,12 @@ import Ticket from './views/Ticket'
 import OrderDetail from './views/OrderDetail'
 import Warn from './views/Warn'
 import Help from './views/Help'
+// sub
 import Mobile from './views/sub/Mobile'
 import Password from './views/sub/Password'
 import UserName from './views/sub/UserName'
+// store
+import CheckOrder from './views/store/CheckOrder'
 
 router.map({
   '/': {
@@ -129,6 +132,9 @@ router.map({
   },
   '/username': {
     component: UserName
+  },
+  '/checkorder': {
+    component: CheckOrder
   }
 })
 

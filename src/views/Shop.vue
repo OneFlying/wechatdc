@@ -312,8 +312,8 @@
     margin-left: -5px;
   }
   .wxdc_weui_media_title {
-    padding: 5px 0;
-    font-size: 12px;
+    padding: 7px 0;
+    font-size: 13px;
   }
   .wxdc_weui_media_title .weui_cell_ft {
     white-space: nowrap;

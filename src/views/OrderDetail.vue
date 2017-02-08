@@ -21,36 +21,37 @@
             </box>
           </div>
         </group>
-        <group>
+        <group class="wxdc-order-detail-list">
           <cell title="东北家常菜馆" is-link>
-            <img style="width: 20px;" slot="icon" src="http://img4.imgtn.bdimg.com/it/u=3037353591,3801722723&fm=214&gp=0.jpg">
+            <img style="width: 20px;" slot="icon"
+                 src="http://img4.imgtn.bdimg.com/it/u=3037353591,3801722723&fm=214&gp=0.jpg">
           </cell>
           <cell
             class="wxdc_weui_media_title"
             :class="$index === 0 ? '' : 'wxdc_weui_media_title_noborder'"
-            style="padding: 5px 10px 5px 15px;" v-for="i in 10">
+            v-for="i in 10">
             <span slot="icon">土豆烧豆角{{ i }}</span>
             <span slot="value" style="width:80px;text-align:left;display: inline-block;color:#999;">x1</span>
             <span slot="value" style="display: inline-block;width:25px;text-align: left">&#165;18</span>
           </cell>
-          <cell class="wxdc_weui_media_title" style="padding: 5px 10px 5px 15px;">
+          <cell class="wxdc_weui_media_title">
             <span slot="icon">配送费</span>
             <span slot="value" style="width:80px;text-align:left;display: inline-block;color:#999;">x1</span>
             <span slot="value" style="display: inline-block;width:25px;text-align: left">&#165;2</span>
           </cell>
-          <cell class="wxdc_weui_media_title wxdc_weui_media_title_noborder" style="padding: 5px 10px 5px 15px;">
+          <cell class="wxdc_weui_media_title wxdc_weui_media_title_noborder">
             <span slot="icon">餐盒费</span>
             <span slot="value" style="display: inline-block;width:25px;text-align: left">&#165;5</span>
           </cell>
-          <cell class="wxdc_weui_media_title" style="padding: 5px 10px 5px 15px;">
+          <cell class="wxdc_weui_media_title">
             <span slot="icon" style="color:#f60;">在线支付立减优惠</span>
             <span slot="value" style="color:#f60;display: inline-block;width:30px;text-align: left">-&#165;18</span>
           </cell>
-          <cell class="wxdc_weui_media_title wxdc_weui_media_title_noborder" style="padding: 5px 10px 5px 15px;">
+          <cell class="wxdc_weui_media_title wxdc_weui_media_title_noborder">
             <span slot="icon" style="color:#f60;">可乐一份</span>
             <span slot="value" style="color:#f60;display: inline-block;width:30px;text-align: left">-&#165;0</span>
           </cell>
-          <cell class="wxdc_weui_media_title wxdc_weui_media_title_noborder" style="padding: 5px 10px 5px 15px;">
+          <cell class="wxdc_weui_media_title wxdc_weui_media_title_noborder">
             <span slot="icon" style="color:#f60;">红包抵扣</span>
             <span slot="value" style="color:#f60;display: inline-block;width:30px;text-align: left">-&#165;2</span>
           </cell>
@@ -127,6 +128,10 @@
     top: 20px;
     z-index: 200000;
     border: 3px solid #fff;
+  }
+  .wxdc-order-detail-list .wxdc_weui_media_title {
+    padding-left: 15px;
+    padding-right: 15px;
   }
   /* button */
   .wxdc-blue {

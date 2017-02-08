@@ -39,7 +39,7 @@
         <scroller lock-x height="-190+'px'" v-ref:scrollermenu>
           <div class="wxdc-menu-box">
             <ul>
-              <li @click="activemenu(sort.name,$index)"
+              <li @click="activemenu(sort,$index)"
                   class="vux-1px-b"
                   v-for="sort in list"
                   :class="active === sort.name ? 'active' : ''">
@@ -229,8 +229,9 @@
         this.showpreviewer = true
       },
       activemenu (sort, index) {
+        this.isclick = true
         let top = this.scroll[index]
-        this.active = sort
+        this.active = sort.name
         this.$nextTick(() => {
           this.$refs.scroller.reset({
             top: top
@@ -240,9 +241,13 @@
       onscroll (pos) {
         this.scroll.forEach((e, i) => {
           if (pos.top >= e) {
-            this.active = this.list[i].name
+            if (!this.isclick) {
+              this.active = this.list[i].name
+              return
+            }
           }
         })
+        this.isclick = false
       },
       showcart () {
         // 显示购物车
@@ -294,6 +299,7 @@
     },
     data () {
       return {
+        isclick: false,
         cash: 0, // 购物车总金额
         qsf: 20, // 起送价
         psf: 5, // 配送费
@@ -4204,7 +4210,6 @@
   .wxdc-header {
     background-position: top center;
     background-repeat: no-repeat;
-    -webkit-background-size: cover;
     background-size: cover;
   }
   .wxdc-header-inner {
@@ -4344,5 +4349,6 @@
   .wxdc-store-btn a.wxdc-green {
     background-color: #4cd964;
     color: #fff;
+    opacity: 1;
   }
 </style>

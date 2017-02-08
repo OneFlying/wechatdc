@@ -66,7 +66,7 @@
     computed: {
       isstore () {
         let path = this.$route.path
-        if ((path.indexOf('order') !== -1 && path.indexOf('detail') === -1) ||
+        if ((path.indexOf('order') === 1 && path.indexOf('detail') === -1) ||
           path.indexOf('shop') !== -1 || path === '/' || path.indexOf('me') !== -1) {
           return false
         } else {
@@ -85,6 +85,7 @@
 </script>
 <style>
   @import "assets/font/iconfont.css";
+
   html,body {
     width: 100%;
     height: 100%;

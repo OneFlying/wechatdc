@@ -4,7 +4,7 @@
  */
 <template>
   <div>
-    <x-header title="订单" :left-options="{showBack:true,backText:'返回'}"></x-header>
+    <x-header title="订单" :left-options="{showBack:false,backText:'返回'}"></x-header>
     <tab :line-width=2 active-color='#26a2ff' :index.sync="index">
       <tab-item class="vux-center" :selected="demo2 === item" v-for="item in list" @click="demo2 = item">{{item}}</tab-item>
     </tab>
