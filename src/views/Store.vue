@@ -51,7 +51,7 @@
       </div>
       <div class="content">
         <scroller lock-x scrollbar-y height="-150+'px'" v-ref:scroller @on-scroll="onscroll">
-          <div class="wxdc_weui_media" style="padding-bottom: 60px">
+          <div class="wxdc_weui_media" style="padding-bottom: 70px">
             <group v-for="(index,sort) in list" :title="sort.name" style="margin-top: -5px;">
               <a class="weui_media_box weui_media_appmsg"
                  style="padding-right: 5px; padding-left: 10px"

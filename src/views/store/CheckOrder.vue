@@ -89,11 +89,11 @@
     <popup :show.sync="shownote" height="100%">
       <div class="vux-header">
         <div class="vux-header-left" @click="shownote=false">
-          <a class="vux-header-back v-transition">返回</a>
+          <a class="v-transition"><span class="iconfont icon-close"></span></a>
         </div>
         <h1 class="vux-header-title"><span class="v-transition">订单备注</span></h1>
       </div>
-      <scroller lock-x height="-45+'px'" v-ref:scrllernote>
+      <scroller lock-x height="-45+'px'" v-ref:scrollernote>
         <div style="background: #fff; margin: 15px 0;padding: 15px 0 0;">
           <box gap="0 15px">
             <div style="color:#666;font-size: 14px;margin-bottom: 5px;">快速备注</div>
@@ -132,7 +132,7 @@
     <popup :show.sync="showredbag" height="100%">
       <div class="vux-header">
         <div class="vux-header-left" @click="showredbag=false">
-          <a class="vux-header-back v-transition">返回</a>
+          <a class="v-transition"><span class="iconfont icon-close"></span></a>
         </div>
         <h1 class="vux-header-title"><span class="v-transition">使用优惠券</span></h1>
         <div class="vux-header-right"></div>
@@ -255,6 +255,7 @@
 </script>
 <style>
   /* css definition */
+  @import "../../assets/font/iconfont.css";
   @import "../../assets/css/style.css";
 
   .wxdc-check-order-tabbar {

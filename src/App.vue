@@ -38,6 +38,7 @@
   } from './vuex/getters'
   // for test
   import {
+    setChina,
     setAD,
     setList
   } from './vuex/actions'
@@ -60,7 +61,8 @@
       },
       actions: {
         setAD,
-        setList
+        setList,
+        setChina
       }
     },
     computed: {
@@ -77,6 +79,8 @@
     created () {
       this.setAD()
       this.setList()
+      // 设置城市列表
+      this.setChina()
       document.addEventListener('touchmove', function (e) {
         e.preventDefault()
       }, false)

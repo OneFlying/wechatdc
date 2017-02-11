@@ -19,7 +19,8 @@
     "vuex": "^1.0.0",
     "vuex-router-sync": "^2.1.1",
     "vux": "^0.1.1",
-    "weixin-js-sdk": "^1.2.0"
+    "weixin-js-sdk": "^1.2.0",
+    "webp-support": "^1.0.3"
   },
   "devDependencies": {
     "babel-core": "^6.0.0",

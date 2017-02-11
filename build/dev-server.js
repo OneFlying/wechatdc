@@ -1,4 +1,5 @@
 var path = require('path')
+var fs = require('fs')
 var express = require('express')
 var webpack = require('webpack')
 var config = require('../config')
@@ -6,6 +7,12 @@ var proxyMiddleware = require('http-proxy-middleware')
 var webpackConfig = process.env.NODE_ENV === 'testing'
   ? require('./webpack.prod.conf')
   : require('./webpack.dev.conf')
+
+var http = require('http')
+var https = require('https')
+var privateKey  = fs.readFileSync('./private.pem', 'utf8')
+var certificate = fs.readFileSync('./file.crt', 'utf8')
+var credentials = {key: privateKey, cert: certificate}
 
 // default port where dev server listens for incoming traffic
 var port = process.env.PORT || config.dev.port
@@ -56,10 +63,27 @@ app.use(hotMiddleware)
 var staticPath = path.posix.join(config.build.assetsPublicPath, config.build.assetsSubDirectory)
 app.use(staticPath, express.static('./static'))
 
-module.exports = app.listen(port, function (err) {
-  if (err) {
-    console.log(err)
-    return
-  }
-  console.log('Listening at http://localhost:' + port + '\n')
+var httpServer = http.createServer(app)
+var httpsServer = https.createServer(credentials, app)
+var PORT = 8083
+var SSLPORT = 8084
+
+httpServer.listen(PORT, function() {
+  console.log('HTTP Server is running on: http://localhost:%s', PORT);
 })
+httpsServer.listen(SSLPORT, function() {
+  console.log('HTTPS Server is running on: https://localhost:%s', SSLPORT);
+})
+
+module.exports = {
+  httpServer,
+  httpsServer
+}
+
+// module.exports = app.listen(port, function (err) {
+//   if (err) {
+//     console.log(err)
+//     return
+//   }
+//   console.log('Listening at http://localhost:' + port + '\n')
+// })

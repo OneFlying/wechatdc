@@ -1,5 +1,51 @@
 <template>
   <div style="padding-bottom: 0;">
+    <!-- 用户协议 -->
+    <!-- 城市选择 -->
+    <popup :show.sync="showcityselect" height="100%">
+      <div class="wxdc-city-right-list">
+        <div class="wxdc-city-right-list-inner">
+          <a v-for="(key,value) in linklist" :href="'#link'+key">{{ value }}</a>
+        </div>
+      </div>
+      <div class="vux-header">
+        <div class="vux-header-left" @click="showcityselect=false">
+          <a class="v-transition"><span class="iconfont icon-close"></span></a>
+        </div>
+        <h1 class="vux-header-title"><span class="v-transition">城市选择</span></h1>
+        <div class="vux-header-right"></div>
+      </div>
+      <scroller lock-x height="-45+'px'" v-ref:scrollerchina>
+        <div style="padding-bottom: 20px;" class="wxdc-china-city">
+          <div style="margin-right: 15px;">
+            <search class="wxdc-base-city-search"
+              :value.sync="value"
+              top="-12px"
+              :auto-fixed="true"
+              placeholder="输入城市名或拼音查询"
+              cancel-text="取消"></search>
+          </div>
+          <div class="wxdc-base-grid" id="link0">
+            <div class="wxdc-base-grid-title">定位城市</div>
+            <checker>
+              <checker-item value="正在定位">正在定位</checker-item>
+            </checker>
+          </div>
+          <div class="wxdc-base-grid" id="link1">
+            <div class="wxdc-base-grid-title">热门城市</div>
+            <checker>
+              <checker-item v-for="item in hotcity" value="item">
+                {{ item }}
+              </checker-item>
+            </checker>
+          </div>
+          <group v-for="(key,value) in china" :title="key" style="margin-right: 15px">
+            <a :id="'link'+$index"></a>
+            <p class="vux-1px-t" v-for="item in value">{{ item.name }}</p>
+          </group>
+        </div>
+      </scroller>
+    </popup>
     <scroller v-ref:scroller lock-x scrollbar-y height="-45+'px'"
               @pullup:loading="loadmore"
               @pulldown:loading="refresh"
@@ -7,7 +53,7 @@
               :pulldown-config="pulldownConfig">
       <!-- use-pullup use-pulldown -->
       <div style="padding-bottom: 20px">
-        <x-header :left-options="{showBack: false}">
+        <x-header :left-options="{showBack: false}" @click="showcityselect=true">
           <a slot="left" style="font-size: 16px;color:#fff;">
             <i class="iconfont icon-locationfill" style="font-size: 16px"></i>
             {{ location }}
@@ -17,7 +63,7 @@
             <span class="iconfont icon-message" style="font-size: 20px;"></span>
           </a>
         </x-header>
-        <search
+        <search class="wxdc-base-search"
           @on-submit="onSubmit"
           :auto-fixed="autoFixed"
           placeholder="搜索"
@@ -143,12 +189,16 @@
     Clocker,
     Scroller,
     Spinner,
-    Rater
+    Rater,
+    Popup,
+    Checker,
+    CheckerItem
   } from 'vux/src/components'
 
   import {
     getAD,
-    getList
+    getList,
+    getChina
   } from './vuex/getters'
 
   export default {
@@ -164,12 +214,16 @@
       Clocker,
       Scroller,
       Spinner,
-      Rater
+      Rater,
+      Popup,
+      Checker,
+      CheckerItem
     },
     vuex: {
       getters: {
         getAD,
-        getList
+        getList,
+        getChina
       }
     },
     methods: {
@@ -196,50 +250,70 @@
     data () {
       return {
         location: '上海市徐汇区上师大...',
+        showcityselect: true,
         baseList: this.getList,
         ads: this.getAD,
+        china: '',
         time: '2017-02-03', // 倒计时
         n: 20,
         pullupStatus: 'default',
-        pulldownConfig: {content: '下拉刷新', downContent: '下拉刷新', upContent: '释放刷新', loadingContent: '加载中...'}
+        pulldownConfig: {content: '下拉刷新', downContent: '下拉刷新', upContent: '释放刷新', loadingContent: '加载中...'},
+        hotcity: ['上海', '北京', '广州', '深圳', '武汉', '天津', '西安', '南京', '杭州', '成都', '重庆'],
+        linklist: ['!', '#', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J',
+                   'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'W', 'X', 'Y', 'Z']
       }
     },
     ready () {
+      let address = window.localStorage.getItem('address')
+      if (!address) {
+        this.china = this.getChina
+      }
       this.$nextTick(() => {
         this.$refs.scroller.reset()
+        this.$refs.scrollerchina.reset()
       })
     }
   }
 </script>
 <style>
   /* search */
-  .wxdc-base .weui_search_inner .weui_search_input {
+  .wxdc-base-search .weui_search_inner .weui_search_input {
     height: 2em;
     line-height: 2em;
   }
-  .wxdc-base .weui_search_outer {
+  .wxdc-base-search .weui_search_outer {
     background: none;
   }
-  .wxdc-base .weui_search_bar {
+  .wxdc-base-search .weui_search_bar {
     background-color: #26a2ff;
   }
-  .wxdc-base .weui_search_bar:before {
+  .wxdc-base-search .weui_search_bar:before {
     display: none;
   }
-  .wxdc-base .weui_search_bar:after {
+  .wxdc-base-search .weui_search_bar:after {
     display: none;
   }
-  .wxdc-base .weui_search_outer:after {
+  .wxdc-base-search .weui_search_outer:after {
     border-radius: 40px;
   }
-  .wxdc-base .weui_search_text {
+  .wxdc-base-search .weui_search_text {
     border-radius: 40px;
     padding-top: 3px;
   }
-  .wxdc-base .weui_search_inner .weui_icon_search {
+  .wxdc-base-search .weui_search_inner .weui_icon_search {
     top: 2px;
   }
-  .wxdc-base .weui_search_cancel {
+  .wxdc-base-city-search .weui_search_bar {
+    background-color: #ffffff;
+  }
+  .wxdc-base-city-search .vux-search-mask {
+    background: rgba(0,0,0,0.1);
+    border-radius: 5px;
+  }
+  .wxdc-base-city-search .weui_search_outer {
+    background: rgba(0,0,0,0.1);
+  }
+  .wxdc-base-search .weui_search_cancel {
     color: #fff;
     line-height: 38px;
   }
@@ -286,5 +360,52 @@
   }
   .wxdc_weui_media_title_noborder:before {
     display: none;
+  }
+  .wxdc-china-city p {
+    padding: 10px 15px 10px 0;
+    margin-left: 15px;
+    position: relative;
+    font-size: 16px;
+  }
+  .wxdc-base-grid-title {
+    font-size: 14px;
+    margin-top: .77em;
+    margin-bottom: .3em;
+    color: #888;
+    padding: 0 15px;
+  }
+  .wxdc-base-grid .vux-checker-box {
+    padding: 5px 15px 5px 0;
+  }
+  .wxdc-base-grid .vux-checker-item {
+    width: 32.333333%;
+    margin: 0.5%;
+    box-sizing: border-box;
+    background: #ffffff;
+    padding: 5px 0;
+    text-align: center;
+    border: 1px solid #d9d9d9;
+    border-radius: 3px;
+  }
+  .wxdc-city-right-list {
+    position: fixed;
+    right: 0;
+    width: 15px;
+    top: 46px;
+    bottom: 0;
+    background: #ffffff;
+    z-index: 10000;
+  }
+  .wxdc-city-right-list .wxdc-city-right-list-inner {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .wxdc-city-right-list a {
+    display: block;
+    width: 15px;
+    font-size: 12px;
+    text-align: center;
+    color: #26a2ff;
   }
 </style>

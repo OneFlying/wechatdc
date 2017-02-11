@@ -1,6 +1,13 @@
 /**
  * Created by caiyuhao on 2017/1/31.
  */
+/* base */
+export const setChina = ({ dispatch }) => {
+  let china = require('../mock/china.json')
+  dispatch('UPDATE_CHINA', china)
+}
+
+/* test */
 export const setAD = ({ dispatch }) => {
   let ad = require('../mock/test').list1
   dispatch('SET_AD', ad)
@@ -16,9 +23,4 @@ export const setShopList = ({ dispatch }) => {
 export const setShopFooter = ({ dispatch }) => {
   let footer = require('../mock/test').footer
   dispatch('SET_SHOP_FOOTER', footer)
-}
-
-export const setStore = ({ dispatch }) => {
-  let goods = require('../mock/store').menus
-  dispatch('SET_STORE', goods)
 }

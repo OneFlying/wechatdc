@@ -3,12 +3,14 @@
  */
 import {
   UPDATE_DIRECTION,
-  UPDATE_LOADING
+  UPDATE_LOADING,
+  UPDATE_CHINA
 } from '../mutations-type'
 
 let state = {
   isLoading: false,
-  direction: 'forward'
+  direction: 'forward',
+  china: ''
 }
 
 const mutations = {
@@ -17,6 +19,9 @@ const mutations = {
   },
   [UPDATE_DIRECTION] (state, direction) {
     state.direction = direction
+  },
+  [UPDATE_CHINA] (state, china) {
+    state.china = china
   }
 }
 
