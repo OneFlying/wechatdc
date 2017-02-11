@@ -11,15 +11,15 @@
         <div class="vux-header-left" @click="showcityselect=false">
           <a class="v-transition"><span class="iconfont icon-close"></span></a>
         </div>
-        <h1 class="vux-header-title"><span class="v-transition">城市选择</span></h1>
+        <h1 class="vux-header-title" @click="scrollTop"><span class="v-transition">城市选择</span></h1>
         <div class="vux-header-right"></div>
       </div>
       <scroller lock-x height="-45+'px'" v-ref:scrollerchina>
-        <div style="padding-bottom: 20px;" class="wxdc-china-city">
-          <div style="margin-right: 15px;">
+        <div style="padding-bottom: 20px;margin-right: 15px" class="wxdc-china-city">
+          <div class="wxdc-base-city-search-panel">
             <search class="wxdc-base-city-search"
               :value.sync="value"
-              top="-12px"
+              top="0"
               :auto-fixed="true"
               placeholder="输入城市名或拼音查询"
               cancel-text="取消"></search>
@@ -38,7 +38,7 @@
               </checker-item>
             </checker>
           </div>
-          <group v-for="(key,value) in china" :id="'link'+($index+2)" :title="key" style="margin-right: 15px">
+          <group v-for="(key,value) in china" :id="'link'+($index+2)" :title="key">
             <p class="vux-1px-t" v-for="item in value">{{ item.name }}</p>
           </group>
         </div>
@@ -114,7 +114,7 @@
               :pullup-status.sync="pullupStatus"
               :pulldown-config="pulldownConfig">
       <!-- use-pullup use-pulldown -->
-      <div style="padding-bottom: 20px">
+      <div style="padding-bottom: 20px;">
         <x-header :left-options="{showBack: false}" @click="showcityselect=true">
           <a slot="left" style="font-size: 16px;color:#fff;">
             <i class="iconfont icon-locationfill" style="font-size: 16px"></i>
@@ -343,6 +343,13 @@
             top: top
           })
         })
+      },
+      scrollTop () {
+        this.$nextTick(() => {
+          this.$refs.scrollerchina.reset({
+            top: 0
+          })
+        })
       }
     },
     data () {
@@ -411,6 +418,9 @@
   .wxdc-base-search .weui_search_inner .weui_icon_search {
     top: 2px;
   }
+  .wxdc-base-city-search-panel {
+    height: 50px;
+  }
   .wxdc-base-city-search .weui_search_bar {
     background-color: #ffffff;
   }
@@ -418,7 +428,10 @@
     background: rgba(0,0,0,0.1);
     border-radius: 5px;
   }
-  .wxdc-base-city-search .weui_search_outer {
+  .wxdc-base-city-search .weui_search_cancel {
+    color: #26a2ff;
+  }
+  .wxdc-base-city-search.vux-search-fixed .weui_search_inner {
     background: rgba(0,0,0,0.1);
   }
   .wxdc-base-search .weui_search_cancel {
@@ -483,7 +496,7 @@
     padding: 0 15px;
   }
   .wxdc-base-grid .vux-checker-box {
-    padding: 5px 15px 5px 0;
+    padding: 5px 0;
   }
   .wxdc-base-grid .vux-checker-item {
     width: 32.333333%;
@@ -499,10 +512,10 @@
     position: fixed;
     right: 0;
     width: 15px;
-    top: 46px;
+    top: 47px;
     bottom: 0;
     background: #ffffff;
-    z-index: 10000;
+    z-index: 10;
   }
   .wxdc-city-right-list .wxdc-city-right-list-inner {
     position: absolute;
