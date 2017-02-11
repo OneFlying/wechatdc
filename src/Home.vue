@@ -1,11 +1,10 @@
 <template>
   <div style="padding-bottom: 0;">
-    <!-- 用户协议 -->
     <!-- 城市选择 -->
     <popup :show.sync="showcityselect" height="100%">
       <div class="wxdc-city-right-list">
         <div class="wxdc-city-right-list-inner">
-          <a v-for="(key,value) in linklist" :href="'#link'+key">{{ value }}</a>
+          <a v-for="(key,value) in linklist" @click="goLink(key)">{{ value }}</a>
         </div>
       </div>
       <div class="vux-header">
@@ -39,12 +38,75 @@
               </checker-item>
             </checker>
           </div>
-          <group v-for="(key,value) in china" :title="key" style="margin-right: 15px">
-            <a :id="'link'+$index"></a>
+          <group v-for="(key,value) in china" :id="'link'+($index+2)" :title="key" style="margin-right: 15px">
             <p class="vux-1px-t" v-for="item in value">{{ item.name }}</p>
           </group>
         </div>
       </scroller>
+    </popup>
+    <!-- 用户协议 -->
+    <popup :show.sync="showagree" height="100%">
+      <div class="vux-header">
+        <div class="vux-header-left" @click="showagree=false">
+          <a class="v-transition"><span class="iconfont icon-close"></span></a>
+        </div>
+        <h1 class="vux-header-title"><span class="v-transition">用户协议</span></h1>
+        <div class="vux-header-right"></div>
+      </div>
+      <scroller lock-x height="-150+'px'" v-ref:scrolleragree>
+        <div style="padding-bottom: 20px" class="wxdc-base-agree">
+          <p style="text-align: center;font-weight: bold">上海师大云餐厅网上订餐会员协议</p>
+          <font style="font-weight: bold;">请认真阅读会员协议</font><br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;欢迎使用上海师大云餐厅网上订餐服务，请您务必先仔细阅读本会员协议，我们将按以下的方式为您提供网上订餐服务，如果您希望使用本网上订餐服务，您必须完全同意并接受本用户协议。（请拖动右侧滚动条阅读）<br/>
+          •	我们的服务和义务<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;         •	基本服务<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp; •	为提升校园餐饮服务水平，提高用餐效率，上海师大云餐厅（以下简称云餐厅）采用网上预定、送餐到柜、会员规定时段内到餐柜自助取餐的服务模式。<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;•	为确保早餐供应及时充沛，云餐厅的预定时间为：前一天23：00前。<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;•	我们的送餐时间是指送餐到柜的时间。为保证食品安全和产品质量，会员务必在送餐到柜后90分钟内完成取餐，如逾期未取，我们将锁定柜门不予取餐，并作为废餐由清柜员及时回收处理，以避免因产品长时间存放造成变质给会员健康带来风险，逾期未取的损失由会员自己承担。<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp; •	产品、价格以及送餐到柜的时间如有调整，我们将及时在网上更新，敬请留意。<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp; •	如遇不可抗力，云餐厅将暂停提供相关服务。<br/>
+          <br/>
+          •	关于订餐<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;•	产品和包装以实物为准。<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;•	在您成功提交订单完成网上订餐后，页面上会立即提示确认信息，微信收到云餐厅支付成功订单。此外，您也可以在云餐厅首页“订单”中查询本次订餐的所有信息。<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;•	请不要在网上重复提交订单而造成重复下单。<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;•	您成功完成网上订餐后，我们将在预定截止时间汇总相应的食材数量，立刻进行食材采购，因此我们无法接受订单的修改。如您确有特殊情况需要退订的，在预定截止时间前完成退订的，可获100%退款；在预定的送餐到柜时间的3小时前完成退订的，可获50%退款；预定送餐到柜时间3小时内退订，不予退款。<br/>
+          <br/>
+          •	关于支付方式<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;•	我们提供校园卡和微信支付的方式<br/>
+          <br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;•	关于退款方式<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;•	退订成功后，退款将及时存入您的校园卡或微信账号。<br/>
+          <br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;•	关于短信、微信服务<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;•	为了提醒您预定的取餐时间，我们会在送餐到柜后，发微信通知您取餐单号。<br/>
+          <br/>
+          •	关于常见问题处理<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;•	如您的订单未能按时送达餐柜，请立即拨打客户热线57122346，客服将立刻核实订单为您妥善处理。<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;•	如您在预定取餐时间段内不能打开指定柜门，请立即拨打客户热线57122346，客服将立刻核实订单为您妥善处理。<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;•	如您在预定取餐时间段内打开指定柜门后，取到的餐与您的订单内容不符，请立即拨打客户热线57122346，客服将立刻核实订单为您妥善处理。<br/>
+          <br/>
+          •	您（会员）的义务<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;•	请您慎重选择送餐时间和地点，以免耽误取餐。<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;•	请您在取餐时，务必仔细核对订单上的取餐时间、地点和柜号，避免因自己误操作而至系统出错，从而影响他人取餐。<br/>
+          <br/>
+          对于恶意订餐、取餐导致订餐、取餐系统及设备受损的会员，将列入不诚信用户名单，交由校方等相关部门处理。<br/>
+          本协议最终解释权归上海师大云餐厅。<br/>
+        </div>
+      </scroller>
+      <box gap="15px 5px 0 5px">
+        <flexbox>
+          <flexbox-item>
+            <x-button @click="disagree">不同意</x-button>
+          </flexbox-item>
+          <flexbox-item>
+            <x-button type="primary" @click="showagree=false">同意</x-button>
+          </flexbox-item>
+        </flexbox>
+      </box>
+      <div class="wxdc-home-checklist">
+        <checklist :options="agreements" :value.sync="agreement" @on-change="change"></checklist>
+      </div>
     </popup>
     <scroller v-ref:scroller lock-x scrollbar-y height="-45+'px'"
               @pullup:loading="loadmore"
@@ -174,6 +236,7 @@
         <span v-show="pullupStatus === 'loading'"><spinner type="ios-small"></spinner></span>
       </div>
     </scroller>
+    <alert :show.sync="showalert" button-text="确定">您需同意本站协议，才可享受本站提供的服务</alert>
   </div>
 </template>
 <script>
@@ -192,7 +255,11 @@
     Rater,
     Popup,
     Checker,
-    CheckerItem
+    CheckerItem,
+    Box,
+    XButton,
+    Checklist,
+    Alert
   } from 'vux/src/components'
 
   import {
@@ -217,7 +284,11 @@
       Rater,
       Popup,
       Checker,
-      CheckerItem
+      CheckerItem,
+      Box,
+      XButton,
+      Checklist,
+      Alert
     },
     vuex: {
       getters: {
@@ -245,12 +316,47 @@
             this.$broadcast('pulldown:reset', uuid)
           })
         }, 10)
+      },
+      // 下次是否在首页显示用户协议
+      change (val) {
+        let storage = window.localStorage
+        if (val.length > 0) {
+          storage.setItem('isagreement', 'true')
+        } else {
+          storage.removeItem('isagreement')
+        }
+      },
+      // 不同意用户协议
+      disagree () {
+        this.showalert = true
+      },
+      goLink (key) {
+        let anchor = (key) => {
+          return document.querySelector('#link' + key).offsetHeight
+        }
+        let top = 0
+        for (let i = 0; i < key; i++) {
+          top += anchor(i)
+        }
+        this.$nextTick(() => {
+          this.$refs.scrollerchina.reset({
+            top: top
+          })
+        })
       }
     },
     data () {
+      // 获取agreement
+      let storage = window.localStorage
+      let agreement = true
+      if (storage.getItem('isagreement')) {
+        agreement = false
+      }
       return {
         location: '上海市徐汇区上师大...',
         showcityselect: true,
+        showagree: agreement,
+        showalert: false,
         baseList: this.getList,
         ads: this.getAD,
         china: '',
@@ -260,7 +366,9 @@
         pulldownConfig: {content: '下拉刷新', downContent: '下拉刷新', upContent: '释放刷新', loadingContent: '加载中...'},
         hotcity: ['上海', '北京', '广州', '深圳', '武汉', '天津', '西安', '南京', '杭州', '成都', '重庆'],
         linklist: ['!', '#', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J',
-                   'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'W', 'X', 'Y', 'Z']
+                   'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'W', 'X', 'Y', 'Z'],
+        agreement: [],
+        agreements: ['不再显示在首页']
       }
     },
     ready () {
@@ -407,5 +515,22 @@
     font-size: 12px;
     text-align: center;
     color: #26a2ff;
+  }
+  /* 用户协议 */
+  .wxdc-base-agree {
+    margin-top: 5px;
+    width: 97%;
+    margin-left: 1.5%;
+    background: #ffffff;
+  }
+  .wxdc-home-checklist .weui_cells {
+    background: none;
+  }
+  .wxdc-home-checklist label {
+    padding-left: 5px;
+  }
+  .wxdc-home-checklist .weui_cells:after,
+  .wxdc-home-checklist .weui_cells:before {
+    display: none;
   }
 </style>
