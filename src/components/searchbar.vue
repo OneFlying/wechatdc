@@ -3,23 +3,30 @@
 * 搜索框
 */
 <template>
-  <div class="wxdc-base-search">
-    <a class="wxdc-base-search-back" @click="showSearch">
-      <span class="iconfont icon-back"></span>
-    </a>
-    <span v-show="show" @click="showSearch">
+  <div style="height: 100%">
+    <div class="wxdc-base-search">
+      <a class="wxdc-base-search-back" @click="showSearch">
+        <span class="iconfont icon-back"></span>
+      </a>
+      <span v-show="show" @click="showSearch">
       <span class="iconfont icon-search" style="font-size: 16px"></span>
       {{ placeholder }}
     </span>
-    <div style="float: left">
-      <div style="clear: both;position: relative">
-        <i class="iconfont icon-search" v-show="!show" style="font-size: 16px"></i>
-        <input type="text" name="search_top" :id="'search'+uuid" :placeholder="placeholder" title="" @change="change">
+      <div style="float: left">
+        <div style="clear: both;position: relative">
+          <i class="iconfont icon-search" v-show="!show" style="font-size: 16px"></i>
+          <input type="text" name="search_top" :id="'search'+uuid" :placeholder="placeholder" title="" @change="change">
+        </div>
       </div>
     </div>
-  </div>
-  <div v-show="!show" class="wxdc-base-search-results">
-    <p v-for="item in results">{{ item }}</p>
+    <div v-show="!show" class="wxdc-base-search-results">
+      <scroller lock-x height="-45+'px'" v-ref:scrollersearchbar>
+        <div style="padding-bottom: 10px">
+          <cell v-for="i in 20" :title="'搜索结果'+i" style="background: #f8f8f8;padding: 10px 15px;">
+          </cell>
+        </div>
+      </scroller>
+    </div>
   </div>
 </template>
 <script>
@@ -45,7 +52,16 @@
     }
   }
 
+  import {
+    Scroller,
+    Cell
+  } from 'vux/src/components'
+
   export default {
+    components: {
+      Scroller,
+      Cell
+    },
     methods: {
       uuid () {
         return Math.random().toString(36).substring(3, 8)
@@ -58,6 +74,9 @@
         if (!this.show) {
           document.querySelector('#search' + this.uuid).focus()
           this.style = 'margin-left: 50px'
+          let results = document.querySelector('.wxdc-base-search-results')
+          let body = document.body
+          body.appendChild(results)
         } else {
           this.style = 'margin-left: 0'
         }
@@ -70,6 +89,10 @@
         let search = document.querySelector('.wxdc-base-search')
         let input = document.querySelector('#search' + this.uuid)
         input.style.width = parseInt(this.currentstyle(search)['width']) - 95 + 'px'
+
+        this.$nextTick(() => {
+          this.$refs.scrollersearchbar.reset()
+        })
       }
     },
     props: {
@@ -140,7 +163,7 @@
     color: #888;
     left: 10px;
     height: 36px;
-    line-height: 38px;
+    line-height: 36px;
   }
   .wxdc-base-search-fixed {
     position: fixed;
@@ -161,7 +184,7 @@
     bottom: 0;
     left: 0;
     width: 100%;
-    z-index: 100000;
+    z-index: 10000000;
     background: #f1f1f1;
   }
 </style>

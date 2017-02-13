@@ -6,6 +6,9 @@ export const setChina = ({ dispatch }) => {
   let china = require('../mock/china.json')
   dispatch('UPDATE_CHINA', china)
 }
+export const setIsSetting = ({ dispatch }) => {
+  dispatch('UPDATE_SET', true)
+}
 
 /* test */
 export const setAD = ({ dispatch }) => {

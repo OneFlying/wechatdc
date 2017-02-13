@@ -4,6 +4,7 @@
 export const getLoading = ({ base }) => base.isLoading
 export const getDirection = ({ base }) => base.direction
 export const getChina = ({ base }) => base.china
+export const isSetting = ({ base }) => base.issetting
 
 // TEST
 export const getAD = ({ test }) => test.ad

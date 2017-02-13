@@ -5,6 +5,7 @@
 export const UPDATE_LOADING = 'UPDATE_LOADING'
 export const UPDATE_DIRECTION = 'UPDATE_DIRECTION'
 export const UPDATE_CHINA = 'UPDATE_CHINA'
+export const UPDATE_SET = 'UPDATE_SET'
 
 // TEST
 export const GET_AD = 'GET_AD'

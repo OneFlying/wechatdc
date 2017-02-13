@@ -42,6 +42,11 @@ history.setItem('/', 0)
 router.beforeEach(({ to, from, next }) => {
   const toIndex = history.getItem(to.path)
   const fromIndex = history.getItem(from.path)
+
+  if (to.path !== '/order') {
+    commit('UPDATE_SET', false)
+  }
+
   if (toIndex) {
     if (toIndex > fromIndex || !fromIndex) {
       commit('UPDATE_DIRECTION', 'forward')

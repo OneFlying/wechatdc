@@ -48,10 +48,10 @@
             <span slot="icon"
                   class="iconfont icon-hotfill" style="color:rgb(74, 165, 240)"></span>
           </cell>
-          <cell title="我的优惠券" is-link>
+          <cell title="我的优惠券" is-link v-link="{path:'/ticket'}">
             <span slot="icon" class="iconfont icon-ticket" style="color:#ff5f3e"></span>
           </cell>
-          <cell title="历史订单" is-link v-link="{path:'/order'}">
+          <cell title="历史订单" is-link @click="showOrderBack">
             <span slot="icon" class="iconfont icon-formfill" style="color:#6ac20b"></span>
           </cell>
           <cell title="我的评价" is-link>
@@ -59,7 +59,7 @@
           </cell>
         </group>
         <group class="wxdc-me-menu">
-          <cell title="订餐须知" is-link style="color:#80504c">
+          <cell title="订餐须知" is-link style="color:#80504c" v-link="{path:'/help'}">
             <span slot="icon" class="iconfont icon-pay"></span>
           </cell>
           <cell title="我的投诉" is-link>
@@ -83,6 +83,9 @@
     Scroller,
     Card
   } from 'vux/src/components'
+  import {
+    setIsSetting
+  } from '../vuex/actions'
 
   export default {
     components: {
@@ -91,6 +94,20 @@
       Cell,
       Scroller,
       Card
+    },
+    vuex: {
+      actions: {
+        setIsSetting
+      }
+    },
+    methods: {
+      showOrderBack () {
+        this.setIsSetting()
+        window.router.go({
+          path: '/order',
+          replace: false
+        })
+      }
     },
     ready () {
       this.$nextTick(() => {

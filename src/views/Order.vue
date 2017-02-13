@@ -4,7 +4,7 @@
  */
 <template>
   <div>
-    <x-header title="订单" :left-options="{showBack:false,backText:'返回'}"></x-header>
+    <x-header title="订单" :left-options="leftOptions"></x-header>
     <tab :line-width=2 active-color='#26a2ff' :index.sync="index">
       <tab-item class="vux-center" :selected="demo2 === item" v-for="item in list" @click="demo2 = item">{{item}}</tab-item>
     </tab>
@@ -158,6 +158,10 @@
     XButton
   } from 'vux/src/components'
 
+  import {
+    isSetting
+  } from '../vuex/getters'
+
   export default {
     components: {
       XHeader,
@@ -170,6 +174,11 @@
       Group,
       Spinner,
       XButton
+    },
+    vuex: {
+      getters: {
+        isSetting
+      }
     },
     methods: {
       loadmore (uuid) {
@@ -219,6 +228,14 @@
         window.alert('再来一单')
       }
     },
+    computed: {
+      leftOptions () {
+        return {
+          showBack: this.isSetting,
+          backText: '返回'
+        }
+      }
+    },
     data () {
       let height = document.documentElement.clientHeight
       return {
@@ -229,7 +246,8 @@
         n: 10,
         n1: 10,
         pullupStatus: 'default',
-        pulldownConfig: {content: '下拉刷新', downContent: '下拉刷新', upContent: '释放刷新', loadingContent: '加载中...'}
+        pulldownConfig: {content: '下拉刷新', downContent: '下拉刷新', upContent: '释放刷新', loadingContent: '加载中...'},
+        leftOptions: {showBack: false, backText: '返回'}
       }
     },
     ready () {
