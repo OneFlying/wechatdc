@@ -69,7 +69,7 @@
       isstore () {
         let path = this.$route.path
         if ((path.indexOf('order') === 1 && path.indexOf('detail') === -1) ||
-          path.indexOf('shop') !== -1 || path === '/' || path.indexOf('me') !== -1) {
+          path.indexOf('shop') !== -1 || path.length < 2 || path.indexOf('me') !== -1) {
           return false
         } else {
           return true
