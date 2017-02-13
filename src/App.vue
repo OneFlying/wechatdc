@@ -267,4 +267,8 @@
   .wxdc-number .wxdc-number-move i {
     font-size: 19px;
   }
+  .vux-header .vux-header-title.wxdc-home-header-title,
+  .vux-header h1.wxdc-home-header-title {
+    margin: 0 60px 0 85px;
+  }
 </style>

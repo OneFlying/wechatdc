@@ -33,13 +33,13 @@
           <div class="wxdc-base-grid" id="link1">
             <div class="wxdc-base-grid-title">热门城市</div>
             <checker>
-              <checker-item v-for="item in hotcity" value="item">
+              <checker-item v-for="item in hotcity" value="item" @click="setLocation(item)">
                 {{ item }}
               </checker-item>
             </checker>
           </div>
           <group v-for="(key,value) in china" :id="'link'+($index+2)" :title="key">
-            <p class="vux-1px-t" v-for="item in value">{{ item.name }}</p>
+            <p class="vux-1px-t" v-for="item in value" @click="setLocation(item.name)">{{ item.name }}</p>
           </group>
         </div>
       </scroller>
@@ -115,21 +115,20 @@
               :pulldown-config="pulldownConfig">
       <!-- use-pullup use-pulldown -->
       <div style="padding-bottom: 20px;">
-        <x-header :left-options="{showBack: false}" @click="showcityselect=true">
-          <a slot="left" style="font-size: 16px;color:#fff;">
-            <i class="iconfont icon-locationfill" style="font-size: 16px"></i>
-            {{ location }}
-            <i class="iconfont icon-triangledownfill" style="font-size: 10px"></i>
-          </a>
-          <a slot="right" style="color: #fff;padding: 10px;margin-top: -10px;margin-right: -10px">
+        <div class="vux-header">
+          <div class="vux-header-left" @click="showcityselect=true">
+            <a class="v-transition">
+              {{ location | fmtLocation }}<span class="iconfont icon-unfold" style="font-size: 16px;"></span>
+            </a>
+          </div>
+          <!-- 顶部搜索 -->
+          <div class="vux-header-title wxdc-home-header-title">
+            <searchbar placeholder="输入商户名称"></searchbar>
+          </div>
+          <div class="vux-header-right" style="color: #fff;padding: 10px;margin-top: -10px;margin-right: -10px">
             <span class="iconfont icon-message" style="font-size: 20px;"></span>
-          </a>
-        </x-header>
-        <search class="wxdc-base-search"
-          @on-submit="onSubmit"
-          :auto-fixed="autoFixed"
-          placeholder="搜索"
-          cancel-text="取消"></search>
+          </div>
+        </div>
         <swiper
           :list="baseList" :show-desc-mask="false"
           auto :aspect-ratio="300/800" dots-position="center"></swiper>
@@ -262,6 +261,8 @@
     Alert
   } from 'vux/src/components'
 
+  import searchbar from './components/searchbar.vue'
+
   import {
     getAD,
     getList,
@@ -288,7 +289,8 @@
       Box,
       XButton,
       Checklist,
-      Alert
+      Alert,
+      searchbar
     },
     vuex: {
       getters: {
@@ -350,6 +352,10 @@
             top: 0
           })
         })
+      },
+      setLocation (location) {
+        this.location = location
+        this.showcityselect = false
       }
     },
     data () {
@@ -360,7 +366,7 @@
         agreement = false
       }
       return {
-        location: '上海市徐汇区上师大...',
+        location: '上海',
         showcityselect: true,
         showagree: agreement,
         showalert: false,
@@ -391,33 +397,8 @@
   }
 </script>
 <style>
+  @import "assets/font/iconfont.css";
   /* search */
-  .wxdc-base-search .weui_search_inner .weui_search_input {
-    height: 2em;
-    line-height: 2em;
-  }
-  .wxdc-base-search .weui_search_outer {
-    background: none;
-  }
-  .wxdc-base-search .weui_search_bar {
-    background-color: #26a2ff;
-  }
-  .wxdc-base-search .weui_search_bar:before {
-    display: none;
-  }
-  .wxdc-base-search .weui_search_bar:after {
-    display: none;
-  }
-  .wxdc-base-search .weui_search_outer:after {
-    border-radius: 40px;
-  }
-  .wxdc-base-search .weui_search_text {
-    border-radius: 40px;
-    padding-top: 3px;
-  }
-  .wxdc-base-search .weui_search_inner .weui_icon_search {
-    top: 2px;
-  }
   .wxdc-base-city-search-panel {
     height: 50px;
   }
@@ -433,10 +414,6 @@
   }
   .wxdc-base-city-search.vux-search-fixed .weui_search_inner {
     background: rgba(0,0,0,0.1);
-  }
-  .wxdc-base-search .weui_search_cancel {
-    color: #fff;
-    line-height: 38px;
   }
   /* swiper */
   .wxdc-base .vux-slider > .vux-indicator > a > .vux-icon-dot.active,
