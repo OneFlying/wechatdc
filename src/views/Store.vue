@@ -24,7 +24,7 @@
                   <span slot="icon" style="color: #fff;">&#165;5配送费</span>
                 </cell>
                 <cell class="wxdc_weui_media_title wxdc_weui_media_title_noborder">
-                  <span slot="icon" style="font-size: 12px;color:#eee;" class="iconfont icon-time"></span>
+                  <span slot="icon" style="font-size: 14px;color:#eee;" class="iconfont icon-time"></span>
                   <span slot="icon" style="color:#eee;">07:00 07:30 08:00 08:30 09:00 09:30 10:00 10:30 11:00 11:30</span>
                 </cell>
               </p>
@@ -35,40 +35,42 @@
           <tab-item class="vux-center" :selected="demo2 === item" v-for="item in list2" @click="demo2 = item">{{item}}</tab-item>
         </tab>
       </div>
-      <div class="menu">
-        <scroller lock-x height="-190+'px'" v-ref:scrollermenu>
-          <div class="wxdc-menu-box">
-            <ul>
-              <li @click="activemenu(sort,$index)"
-                  class="vux-1px-b"
-                  v-for="sort in list"
-                  :class="active === sort.name ? 'active' : ''">
-                <badge :text="''+sort.numbers" v-if="sort.numbers !== 0" class="wxdc-menu-box-li-badge"></badge><span>{{ sort.name }}</span>
-              </li>
-            </ul>
-          </div>
-        </scroller>
-      </div>
-      <div class="content">
-        <scroller lock-x scrollbar-y height="-150+'px'" v-ref:scroller @on-scroll="onscroll">
-          <div class="wxdc_weui_media" style="padding-bottom: 70px">
-            <group v-for="(index,sort) in list" :title="sort.name" style="margin-top: -5px;">
-              <a class="weui_media_box weui_media_appmsg"
-                 style="padding-right: 5px; padding-left: 10px"
-                 v-for="(i, good) in sort.foods">
-                <div class="weui_media_hd" style="width: 45px;" @click="detail(i, index)">
-                  <img class="weui_media_appmsg_thumb" alt="" :src="good.image_path | fmtSrc">
-                </div>
-                <div class="weui_media_bd">
-                  <h4 class="weui_media_title" @click="detail(i, index)">{{ good.name }}</h4>
-                  <p class="weui_media_desc">
-                    <cell class="wxdc_weui_media_title">
-                      <rater :value="good.rating" slot="icon" :font-size="12" :margin="0" active-color="#ffaa0c"></rater>
-                      <span slot="icon">{{ good.rating }}</span>
-                    </cell>
-                    <cell class="wxdc_weui_media_title wxdc_weui_media_title_noborder" style="padding-right: 10px">
-                      <span slot="icon" style="color: #ff6000; font-size: 14px;">&#165;{{ good.specfoods[0].price }}</span>
-                      <span slot="value" class="wxdc-number">
+      <!-- 商品 -->
+      <div v-show="demo2 === '商品'">
+        <div class="menu">
+          <scroller lock-x height="-190+'px'" v-ref:scrollermenu>
+            <div class="wxdc-menu-box">
+              <ul>
+                <li @click="activemenu(sort,$index)"
+                    class="vux-1px-b"
+                    v-for="sort in list"
+                    :class="active === sort.name ? 'active' : ''">
+                  <badge :text="''+sort.numbers" v-if="sort.numbers !== 0" class="wxdc-menu-box-li-badge"></badge><span>{{ sort.name }}</span>
+                </li>
+              </ul>
+            </div>
+          </scroller>
+        </div>
+        <div class="content">
+          <scroller lock-x scrollbar-y height="-150+'px'" v-ref:scroller @on-scroll="onscroll">
+            <div class="wxdc_weui_media" style="padding-bottom: 70px">
+              <group v-for="(index,sort) in list" :title="sort.name" style="margin-top: -5px;">
+                <a class="weui_media_box weui_media_appmsg"
+                   style="padding-right: 5px; padding-left: 10px"
+                   v-for="(i, good) in sort.foods">
+                  <div class="weui_media_hd" style="width: 45px;" @click="detail(i, index)">
+                    <img class="weui_media_appmsg_thumb" alt="" :src="good.image_path | fmtSrc">
+                  </div>
+                  <div class="weui_media_bd">
+                    <h4 class="weui_media_title" @click="detail(i, index)">{{ good.name }}</h4>
+                    <p class="weui_media_desc">
+                      <cell class="wxdc_weui_media_title">
+                        <rater :value="good.rating" slot="icon" :font-size="12" :margin="0" active-color="#ffaa0c"></rater>
+                        <span slot="icon">{{ good.rating }}</span>
+                      </cell>
+                      <cell class="wxdc_weui_media_title wxdc_weui_media_title_noborder" style="padding-right: 10px">
+                        <span slot="icon" style="color: #ff6000; font-size: 14px;">&#165;{{ good.specfoods[0].price }}</span>
+                        <span slot="value" class="wxdc-number">
                           <span
                             v-if="good.number !== 0"
                             class="wxdc-number-move"
@@ -86,9 +88,70 @@
                             <i class="iconfont icon-add"></i>
                           </span>
                         </span>
+                      </cell>
+                    </p>
+                  </div>
+                </a>
+              </group>
+            </div>
+          </scroller>
+        </div>
+      </div>
+      <!-- 商家 -->
+      <div v-show="demo2 === '商家'">
+        <scroller lock-x scrollbar-y height="-150+'px'" v-ref:scrollershop>
+          <div style="padding-bottom: 60px" class="wxdc-store-shop">
+            <a class="weui_media_box weui_media_appmsg" style="padding: 5px 10px;background:#fff;">
+              <div class="weui_media_hd">
+                <img class="weui_media_appmsg_thumb" alt="logo" src="http://img4.imgtn.bdimg.com/it/u=3037353591,3801722723&fm=214&gp=0.jpg">
+              </div>
+              <div class="weui_media_bd">
+                <h4 class="weui_media_title">杨明宇黄猛击米饭</h4>
+                <p class="weui_media_desc">
+                  <cell class="wxdc_weui_media_title">
+                    <rater :value="4.3" slot="icon" :font-size="12" :margin="0" active-color="#ffaa0c"></rater>
+                    <span slot="icon" style="color: #ff6000">4.3</span>
+                    <span slot="icon" style="color: #ccc"> / </span>
+                    <span slot="icon">&#165;20起送</span>
+                    <span slot="icon" style="color: #ccc"> / </span>
+                    <span slot="icon">&#165;5配送费</span>
+                  </cell>
+                  <cell class="wxdc_weui_media_title wxdc_weui_media_title_noborder">
+                    <span slot="icon" style="font-size: 14px;" class="iconfont icon-time"></span>
+                    <span slot="icon">07:00 07:30 08:00 08:30 09:00 09:30 10:00 10:30 11:00 11:30</span>
+                  </cell>
+                </p>
+              </div>
+            </a>
+            <!-- 商家评价 -->
+            <group>
+              <a class="weui_media_box weui_media_appmsg wxdc-base-commit"
+                 v-for="i in 5">
+                <div class="weui_media_hd">
+                  <span class="wxdc-me-pic">
+                    <span class="iconfont icon-peoplefill" style="font-size: 36px;color: #eee;"></span>
+                  </span>
+                </div>
+                <div class="weui_media_bd">
+                  <p class="weui_media_desc">
+                    <cell class="wxdc_weui_media_title">
+                      <span slot="icon">小丸子</span>
+                      <span slot="value">2017-02-05 16:46</span>
+                    </cell>
+                    <cell class="wxdc_weui_media_title wxdc_weui_media_title_noborder">
+                      <rater :value="4.3" slot="icon" :font-size="12" :margin="0" active-color="#ffaa0c"></rater>
+                      <span slot="icon">4.3</span>
+                    </cell>
+                    <cell class="wxdc_weui_media_title wxdc_weui_media_title_noborder">
+                      <span slot="icon" style="color: #333">
+                        网上购物这么激烈，没想到店家的服务这么好，商品质量好而价低廉，我太感谢你了！ 店家很讲信誉，而且很不错哦，在这家店买东东，我很满意~
+                      </span>
                     </cell>
                   </p>
                 </div>
+              </a>
+              <a class="wxdc-more vux-1px-t" v-link="{path:'/evaluate'}">
+                查看更多评价<span class="iconfont icon-right" style="font-size: 14px;"></span>
               </a>
             </group>
           </div>
@@ -297,6 +360,15 @@
         })
       }
     },
+    watch: {
+      demo2 (val) {
+        if (val === '商家') {
+          this.$nextTick(() => {
+            this.$refs.scrollershop.reset()
+          })
+        }
+      }
+    },
     data () {
       return {
         isclick: false,
@@ -323,6 +395,7 @@
         this.$refs.scroller.reset()
         this.$refs.scrollercart.reset()
         this.$refs.scrollermenu.reset()
+        this.$refs.scrollershop.reset()
       })
       // @params name id 通过 this.$route.params 获取
       getData().then(replys => {
@@ -352,7 +425,7 @@
       })
     }
   }
-  // 模擬 Ajax
+  // 模拟 Ajax
   function getData () {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
@@ -4156,6 +4229,8 @@
 </script>
 
 <style scoped lange="less">
+  @import "../assets/font/iconfont.css";
+
   .menu {
     width: 75px;
     float: left;

@@ -271,4 +271,40 @@
   .vux-header h1.wxdc-home-header-title {
     margin: 0 60px 0 85px;
   }
+  /* 查看更多 */
+  .wxdc-more {
+    display: block;
+    clear: both;
+    overflow: hidden;
+    width: 100%;
+    padding: 11px 0;
+    text-align: center;
+    position: relative;
+    color: #888;
+    font-size: 14px;
+    line-height: 20px;
+  }
+  /* 评价列表 */
+  .wxdc-base-commit {
+    /**/
+  }
+  .wxdc-base-commit.weui_media_box.weui_media_appmsg {
+    align-items: flex-start;
+  }
+  .wxdc-base-commit .weui_media_hd {
+    width: 40px;
+    margin-top: 10px;
+  }
+  /* 用户头像 */
+  .wxdc-base-commit .wxdc-me-pic {
+    background: #5dc1ff;
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    border-radius: 100%;
+    margin-right: 10px;
+    line-height: 50px;
+    overflow: hidden;
+  }
 </style>

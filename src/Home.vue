@@ -449,6 +449,9 @@
   .box2 {
     margin-left: -5px;
   }
+  .box2 .weui_media_box.weui_media_appmsg {
+    align-items: flex-start;
+  }
   .wxdc_weui_media_title {
     padding: 7px 0;
     font-size: 13px;

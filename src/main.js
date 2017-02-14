@@ -86,6 +86,10 @@ import Password from './views/sub/Password'
 import UserName from './views/sub/UserName'
 // store
 import CheckOrder from './views/store/CheckOrder'
+import Evaluate from './views/store/Evaluate'
+// por
+import PostCommit from './views/opr/PostCommit'
+import PostWarn from './views/opr/PostWarn'
 
 router.map({
   '/': {
@@ -140,6 +144,15 @@ router.map({
   },
   '/checkorder': {
     component: CheckOrder
+  },
+  '/evaluate': {
+    component: Evaluate
+  },
+  '/post/commit': {
+    component: PostCommit
+  },
+  '/post/warn': {
+    component: PostWarn
   }
 })
 

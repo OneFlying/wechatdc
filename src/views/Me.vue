@@ -54,7 +54,7 @@
           <cell title="历史订单" is-link @click="showOrderBack">
             <span slot="icon" class="iconfont icon-formfill" style="color:#6ac20b"></span>
           </cell>
-          <cell title="我的评价" is-link>
+          <cell title="我的评价" is-link v-link="{path:'/commit'}">
             <span slot="icon" class="iconfont icon-messagefill" style="color:#26a2ff"></span>
           </cell>
         </group>
@@ -62,7 +62,7 @@
           <cell title="订餐须知" is-link style="color:#80504c" v-link="{path:'/help'}">
             <span slot="icon" class="iconfont icon-pay"></span>
           </cell>
-          <cell title="我的投诉" is-link>
+          <cell title="我的投诉" is-link v-link="{path:'/warn'}">
             <span slot="icon" class="iconfont icon-warnfill" style="color:red"></span>
           </cell>
         </group>

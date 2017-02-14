@@ -1,6 +1,6 @@
 /**
 * Created by caiyuhao on 2017/2/14.
-* 我的评价
+* 更多评价
 */
 <template>
   <div>
@@ -12,7 +12,22 @@
       :pullup-status.sync="pullupStatus"
       :pulldown-config="pulldownConfig">
       <div style="padding-bottom: 20px">
-        <group title="以下是您做出的评价">
+        <a class="weui_media_box weui_media_appmsg wxdc-evaluate-banner">
+          <div class="weui_media_hd vux-1px-r" style="width:80px;">
+            <countup :start-val="0.1" :end-val="4.7" :duration="4" :decimals="1" class="wxdc-evaluate-countup"></countup>
+            <span style="font-size: 12px;color:#f60;">分</span>
+          </div>
+          <div class="weui_media_bd">
+            <h4 class="weui_media_title">杨明宇黄猛击米饭</h4>
+            <p class="weui_media_desc">
+              <cell class="wxdc_weui_media_title wxdc_weui_media_title_noborder">
+                <rater :value="4.3" slot="icon" :font-size="12" :margin="0" active-color="#ffaa0c"></rater>
+                <span slot="icon"> / 5元配送 / 20元起送</span>
+              </cell>
+            </p>
+          </div>
+        </a>
+        <group>
           <a class="weui_media_box weui_media_appmsg wxdc-base-commit"
              v-for="i in n">
             <div class="weui_media_hd">
@@ -115,4 +130,3 @@
     font-size: 12px;
   }
 </style>
-
