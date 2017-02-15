@@ -17,12 +17,16 @@
       <scroller lock-x height="-45+'px'" v-ref:scrollerchina>
         <div style="padding-bottom: 20px;margin-right: 15px" class="wxdc-china-city">
           <div class="wxdc-base-city-search-panel">
-            <search class="wxdc-base-city-search"
-              :value.sync="value"
+            <search
+              class="wxdc-base-city-search"
+              :value.sync="selectcity"
               top="0"
               :auto-fixed="true"
-              placeholder="输入城市名或拼音查询"
-              cancel-text="取消"></search>
+              placeholder="输入城市名或拼音缩写查询"
+              cancel-text="取消"
+              @result-click="resultClick"
+              @on-change="getResult"
+              :results="results"></search>
           </div>
           <div class="wxdc-base-grid" id="link0">
             <div class="wxdc-base-grid-title">定位城市</div>
@@ -300,9 +304,6 @@
       }
     },
     methods: {
-      onSubmit () {
-        //
-      },
       loadmore (uuid) {
         setTimeout(() => {
           this.n += 10
@@ -356,6 +357,18 @@
       setLocation (location) {
         this.location = location
         this.showcityselect = false
+      },
+      // 搜索到的城市列表单机事件
+      resultClick (item) {
+        window.alert('you click the result item: ' + JSON.stringify(item))
+      },
+      // 渲染搜索城市列表
+      getResult (val) {
+        this.results = val ? this.resultRender(this.selectcity) : []
+      },
+      // 城市列表渲染函数
+      resultRender (val) {
+        // let temp = []
       }
     },
     data () {
@@ -376,6 +389,8 @@
         baseList: this.getList,
         ads: this.getAD,
         china: '',
+        selectcity: '', // 搜索城市
+        results: [], // 搜索城市，符合条件城市列表
         time: '2017-02-03', // 倒计时
         n: 20,
         pullupStatus: 'default',
@@ -386,9 +401,6 @@
         agreement: [],
         agreements: ['不再显示在首页']
       }
-    },
-    created () {
-
     },
     ready () {
       let address = window.localStorage.getItem('address')
