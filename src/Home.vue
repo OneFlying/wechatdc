@@ -361,9 +361,12 @@
     data () {
       // 获取agreement
       let storage = window.localStorage
+      let history = window.sessionStorage
       let agreement = true
-      if (storage.getItem('isagreement')) {
+      if (storage.getItem('isagreement') || history.getItem('isFirstLoad')) {
         agreement = false
+      } else {
+        history.setItem('isFirstLoad', true)
       }
       return {
         location: '上海',
@@ -383,6 +386,9 @@
         agreement: [],
         agreements: ['不再显示在首页']
       }
+    },
+    created () {
+
     },
     ready () {
       let address = window.localStorage.getItem('address')
