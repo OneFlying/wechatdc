@@ -42,7 +42,7 @@
               </checker-item>
             </checker>
           </div>
-          <group v-for="(key,value) in china" :id="'link'+($index+2)" :title="key">
+          <group v-for="(key,value) in china" :id="'link'+($index+2)" :title="key" class="wxdc-china-city-group">
             <p class="vux-1px-t" v-for="item in value" @click="setLocation(item.name)">{{ item.name }}</p>
           </group>
         </div>
@@ -358,9 +358,9 @@
         this.location = location
         this.showcityselect = false
       },
-      // 搜索到的城市列表单机事件
+      // 搜索到的城市列表单击事件
       resultClick (item) {
-        window.alert('you click the result item: ' + JSON.stringify(item))
+        this.setLocation(item.title)
       },
       // 渲染搜索城市列表
       getResult (val) {
@@ -368,7 +368,35 @@
       },
       // 城市列表渲染函数
       resultRender (val) {
-        // let temp = []
+        let temp = []
+        let reg = new RegExp('^[\u4E00-\u9FA5]+$')
+        if (reg.test(val)) {
+          for (let key in this.china) {
+            if (!this.china.hasOwnProperty(key)) continue
+            this.china[key].map((o) => {
+              if (o.name.indexOf(val) !== -1) {
+                temp.push({
+                  title: o.name,
+                  other: o.abbr
+                })
+              }
+            })
+          }
+        } else {
+          let key = val.substring(0, 1).toUpperCase()
+          this.china[key].map((o) => {
+            if (o.abbr.indexOf(val) !== -1 ||
+              o.abbr.indexOf(val.toUpperCase()) !== -1 ||
+              o.pinyin.indexOf(val) !== -1) {
+              temp.push({
+                title: o.name,
+                other: o.abbr
+              })
+            }
+          })
+        }
+
+        return temp
       }
     },
     data () {
@@ -480,7 +508,7 @@
   .wxdc_weui_media_title_noborder:before {
     display: none;
   }
-  .wxdc-china-city p {
+  .wxdc-china-city-group p {
     padding: 10px 15px 10px 0;
     margin-left: 15px;
     position: relative;
