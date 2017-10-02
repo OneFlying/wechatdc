@@ -1,0 +1,6 @@
+$meal-navbar-height: 46px;
+
+.meal-navbar {
+  background-color: $me-background;
+  height: pxToVw($meal-navbar-height);
+}

@@ -1,23 +1,27 @@
 <template>
-  <div id="app">
-    <img src="./assets/logo.png">
-    <router-view></router-view>
+  <div id="WeChatMeal">
+    <me-navbar></me-navbar>
+    <router-view class="viewbox"></router-view>
+    <me-tabbar></me-tabbar>
   </div>
 </template>
 
 <script>
-export default {
-  name: 'app'
-}
+  import MeNavbar from '@/components/navbar'
+  import MeTabbar from '@/components/tabbar'
+
+  export default {
+    name: 'WeChatMeal',
+    components: {
+      MeNavbar,
+      MeTabbar
+    }
+  }
 </script>
 
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+<style lang="scss">
+  @import "~normalize.css";
+  @import "assets/scss/base";
+  @import "assets/scss/navbar";
+  @import "assets/scss/tabbar";
 </style>

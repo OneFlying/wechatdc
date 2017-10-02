@@ -9,7 +9,8 @@ function resolve (dir) {
 
 module.exports = {
   entry: {
-    app: './src/main.js'
+    app: ['babel-polyfill', './src/main.js'],
+    webpack: 'webpack-hot-middleware/client'
   },
   output: {
     path: config.build.assetsRoot,

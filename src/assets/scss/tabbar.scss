@@ -1,0 +1,9 @@
+$meal-tabbar-height: 52px;
+
+.meal-tabbar {
+  height: pxToVw($meal-tabbar-height);
+  background-color: #333;
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+}
