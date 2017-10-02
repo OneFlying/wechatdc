@@ -1,8 +1,8 @@
 {
-  "name": "vue-wechatdc",
-  "version": "1.0.0",
-  "description": "wechat dc",
-  "author": "蔡雨豪 <caiyuhao2015@gmail.com>",
+  "name": "Wechat-Meal",
+  "version": "2.0.0",
+  "description": "Wechat Meal | 微信点餐",
+  "author": "Paytham <caiyuhao2015@gmail.com>",
   "private": true,
   "scripts": {
     "dev": "node build/dev-server.js",
