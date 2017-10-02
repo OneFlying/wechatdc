@@ -1,4 +1,9 @@
 # WeChat Meal
+WeChat-Meal clone built with vue, vuex, vue-router
+
+## ChangeLog
+- 2017/10/02
+  - Create 2.0
 
 ## Build Setup
 
