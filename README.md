@@ -3,7 +3,7 @@ WeChat-Meal clone built with vue, vuex, vue-router
 
 ## 更新日志
 - 2017/10/02
-  - 创建 2.0 版本
+   - 创建 2.0 版本
   
 ## 特性
 - App Shell支持
