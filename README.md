@@ -6,14 +6,14 @@ WeChat-Meal clone built with vue, vuex, vue-router
   - 创建 2.0 版本
   
 ## 特性
-  - App Shell支持
-  - ES6
-  - Promise支持
-  - Mock支持
-  - 过渡动画支持
-  - 状态管理（vuex）
-  - Sass预处理
-  - vw layout（不再采用lib-flexible）
+- App Shell支持
+- ES6
+- Promise支持
+- Mock支持
+- 过渡动画支持
+- 状态管理（vuex）
+- Sass预处理
+- vw layout（不再采用lib-flexible）
 
 ## 运行
 
