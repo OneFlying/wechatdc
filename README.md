@@ -14,6 +14,7 @@ WeChat-Meal clone built with vue, vuex, vue-router
 - 状态管理（vuex）
 - Sass预处理
 - vw layout（不再采用lib-flexible）
+- 跨端调试支持，采用vide（debuggap）
 
 ## 运行
 
