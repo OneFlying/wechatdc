@@ -18,7 +18,7 @@ WeChat-Meal clone built with vue, vuex, vue-router
 ## 运行
 
 ``` bash
-**安装国内采用cnpm源速度要快不少，具体使用方法自行搜索文档**
+** 安装国内采用cnpm源速度要快不少，具体使用方法自行搜索文档 **
 # 安装依赖
 cnpm install
 
