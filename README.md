@@ -41,4 +41,4 @@ npm run e2e
 npm test
 ```
 
-更详细的配置和运行指南, 请参考 【指南】（http://vuejs-templates.github.io/webpack/），【vue-loader文档】（http://vuejs.github.io/vue-loader）。
+更详细的配置和运行指南, 请参考 【指南】（ http://vuejs-templates.github.io/webpack/ ），【vue-loader文档】（ http://vuejs.github.io/vue-loader ）。
