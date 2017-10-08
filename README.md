@@ -1,4 +1,4 @@
-# WeChat Meal
+# WeChat-Meal
 WeChat-Meal clone built with vue(2.x), vuex, vue-router
 
 ## 更新日志
