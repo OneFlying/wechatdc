@@ -1,7 +1,9 @@
 # WeChat Meal
-WeChat-Meal clone built with vue, vuex, vue-router
+WeChat-Meal clone built with vue(2.x), vuex, vue-router
 
 ## 更新日志
+- 2017/10/08
+  - 暂停版本更新（具体时间待定，对此造成的问题，敬请原谅）
 - 2017/10/02
   - 创建 2.0 版本
   
